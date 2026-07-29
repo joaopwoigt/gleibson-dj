@@ -1,15 +1,30 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Unbounded, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+// Fontes da marca (tokens.md §4). next/font/google baixa e self-hosta no build:
+// nenhum request a fonts.gstatic.com em runtime. Nomes de var próprios para não
+// colidir com os tokens --font-display/body/mono do @theme (Task 02); o @theme
+// referencia estas vars e adiciona os fallbacks.
+const unbounded = Unbounded({
+  variable: "--font-unbounded",
   subsets: ["latin"],
+  weight: ["600", "700", "800"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  display: "swap",
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  variable: "--font-ibm-plex-mono",
+  subsets: ["latin"],
+  weight: ["400", "500"],
+  display: "swap",
 });
 
 // Placeholder mínimo — metadata completa, Open Graph e favicon vêm na Task 18.
@@ -27,7 +42,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       data-mode="eventos"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
+      className={`${unbounded.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

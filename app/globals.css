@@ -52,10 +52,12 @@
   --color-sucesso:#2FA36B;
   --color-erro:#E5484D;
 
-  /* --- Fontes: arquivos carregam na Task 03; aqui so os stacks (fallback ate la) --- */
-  --font-display: "Unbounded", system-ui, sans-serif;
-  --font-body: "Space Grotesk", "Inter", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  /* --- Fontes: self-hosted via next/font (layout.tsx). As vars --font-unbounded/
+     -space-grotesk/-ibm-plex-mono vem do next/font; aqui adicionamos os fallbacks
+     de tokens.md §4. --- */
+  --font-display: var(--font-unbounded), system-ui, sans-serif;
+  --font-body: var(--font-space-grotesk), "Inter", system-ui, sans-serif;
+  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
 
   /* --- Tipografia (tokens.md secao 4) --- */
   --text-display: clamp(2.5rem, 6vw, 3.5rem);
