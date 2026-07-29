@@ -1,26 +1,99 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ===========================================================================
+   Design System DJ Gleib — base dual-mode (Etapa 4, portada para Tailwind v4)
+   Fonte de verdade: design-system/tokens.md. Ver design-system/PORTING-NOTES.md
+   para o mapeamento v3 -> v4 e os desvios.
+
+   Os tokens semanticos --ds-* trocam de valor conforme [data-mode]. Um
+   componente escrito uma vez funciona nos dois modos.
+=========================================================================== */
+
+:root, [data-mode="eventos"] {
+  --ds-bg:#F1EEE8; --ds-surface:#F7F4EE; --ds-fg:#16131C; --ds-fg-2:#45424C;
+  --ds-accent:#6D28D9; --ds-accent-emphasis:#6D28D9; --ds-on-accent:#FFFFFF;
+  --ds-border:#DAD4CA; --ds-glow:none;
+}
+[data-mode="balada"] {
+  --ds-bg:#100E14; --ds-surface:#211B2E; --ds-fg:#F1EEE8; --ds-fg-2:#948BA6;
+  --ds-accent:#9B5CFF; --ds-accent-emphasis:#B98CFF; --ds-on-accent:#100E14;
+  --ds-border:#2A2536; --ds-glow:0 0 24px rgba(155,92,255,.45);
 }
 
+/* Semanticas: `inline` faz a utility referenciar --ds-* direto, entao ela
+   troca por modo no ponto de uso (sem `inline` o valor congelaria no :root). */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--ds-bg);
+  --color-surface: var(--ds-surface);
+  --color-fg: var(--ds-fg);
+  --color-fg-2: var(--ds-fg-2);
+  --color-accent: var(--ds-accent);
+  --color-accent-emphasis: var(--ds-accent-emphasis);
+  --color-on-accent: var(--ds-on-accent);
+  --color-line: var(--ds-border);
+  --shadow-glow: var(--ds-glow);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* Estaticos: paleta bruta, fontes, tipografia, cantos vivos, container, movimento */
+@theme {
+  /* --- Paleta bruta: cores-ancora do brand book (fixas, independem de modo) --- */
+  --color-pretotinta:#100E14;
+  --color-uva:#211B2E;
+  --color-purpura-profunda:#6D28D9;
+  --color-purpura-eletrica:#9B5CFF;
+  --color-purpura-clara:#B98CFF;
+  --color-osso:#F1EEE8;
+  --color-superficie-clara:#F7F4EE;
+  --color-tinta:#16131C;
+  --color-lavanda:#948BA6;
+  --color-grafite:#45424C;
+  --color-borda-escura:#2A2536;
+  --color-borda-clara:#DAD4CA;
+  --color-sucesso:#2FA36B;
+  --color-erro:#E5484D;
+
+  /* --- Fontes: arquivos carregam na Task 03; aqui so os stacks (fallback ate la) --- */
+  --font-display: "Unbounded", system-ui, sans-serif;
+  --font-body: "Space Grotesk", "Inter", system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+
+  /* --- Tipografia (tokens.md secao 4) --- */
+  --text-display: clamp(2.5rem, 6vw, 3.5rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.01em;
+  --text-h1: clamp(2rem, 4.5vw, 2.5rem);
+  --text-h1--line-height: 1.05;
+  --text-h1--letter-spacing: -0.01em;
+  --text-h2: 1.5rem;
+  --text-h2--line-height: 1.1;
+  --text-h2--letter-spacing: -0.01em;
+  --text-h3: 1.125rem;
+  --text-h3--line-height: 1.2;
+  --text-body: 1rem;
+  --text-body--line-height: 1.6;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.5;
+  --text-label: 0.75rem;
+  --text-label--line-height: 1;
+  --text-label--letter-spacing: 0.16em;
+
+  /* --- Cantos vivos (brand-book 4.5): raio 0 em tudo; circulos usam rounded-full --- */
+  --radius-xs:0px; --radius-sm:0px; --radius-md:0px; --radius-lg:0px;
+  --radius-xl:0px; --radius-2xl:0px; --radius-3xl:0px;
+
+  /* --- Largura maxima de conteudo (tokens.md 5) -> max-w-content --- */
+  --container-content:1120px;
+
+  /* --- Movimento (tokens.md 6): "comando" = ease-in-out, nome semantico --- */
+  --ease-command: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* --- Glow forte para destaques no Balada --- */
+  --shadow-glow-strong: 0 0 36px rgba(155,92,255,0.55);
 }
 
+/* Base da pagina: fundo/texto pelos tokens (default = Eventos via :root) */
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--ds-bg);
+  color: var(--ds-fg);
+  font-family: var(--font-body);
 }

@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR" data-mode="eventos">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Design System — DJ Gleib</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+:root, [data-mode="eventos"]{
+  --ds-bg:#F1EEE8; --ds-surface:#F7F4EE; --ds-fg:#16131C; --ds-fg-2:#45424C;
+  --ds-accent:#6D28D9; --ds-accent-emphasis:#6D28D9; --ds-on-accent:#FFFFFF;
+  --ds-border:#DAD4CA; --ds-glow:none;
+}
+[data-mode="balada"]{
+  --ds-bg:#100E14; --ds-surface:#211B2E; --ds-fg:#F1EEE8; --ds-fg-2:#948BA6;
+  --ds-accent:#9B5CFF; --ds-accent-emphasis:#B98CFF; --ds-on-accent:#100E14;
+  --ds-border:#2A2536; --ds-glow:0 0 24px rgba(155,92,255,.45);
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+body{ background:var(--ds-bg); color:var(--ds-fg);
+  font-family:'Space Grotesk','Inter',system-ui,sans-serif; line-height:1.6;
+  transition:background .25s ease, color .25s ease; }
+.wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
+
+.display{ font-family:'Unbounded',system-ui,sans-serif; font-weight:800;
+  font-size:clamp(2.5rem,6vw,3.5rem); line-height:1.02; letter-spacing:-0.01em; }
+.h1{ font-family:'Unbounded',system-ui,sans-serif; font-weight:700; font-size:clamp(2rem,4vw,2.4rem); line-height:1.05; letter-spacing:-0.01em; }
+.h2{ font-family:'Unbounded',system-ui,sans-serif; font-weight:700; font-size:1.5rem; line-height:1.1; letter-spacing:-0.01em; }
+.h3{ font-family:'Unbounded',system-ui,sans-serif; font-weight:600; font-size:1.125rem; line-height:1.2; }
+.body{ font-size:1rem; }
+.small{ font-size:.875rem; }
+.kicker{ font-family:'IBM Plex Mono',ui-monospace,monospace; text-transform:uppercase;
+  letter-spacing:.16em; font-size:.75rem; color:var(--ds-accent); font-weight:500; }
+.muted{ color:var(--ds-fg-2); }
+
+/* wordmark GLE cheio + IB vazado */
+.wordmark{ font-family:'Unbounded',sans-serif; font-weight:800; letter-spacing:-0.01em; }
+.wordmark .hollow{ color:transparent; -webkit-text-stroke:1.5px var(--ds-accent); }
+
+header{ background:var(--ds-bg); border-bottom:2px solid var(--ds-border);
+  position:sticky; top:0; z-index:10; }
+header .wrap{ height:72px; display:flex; align-items:center; justify-content:space-between; }
+
+section{ padding:64px 0; border-bottom:1px solid var(--ds-border); }
+.sec-head{ margin-bottom:32px; }
+.sec-head .h2{ margin-top:12px; }
+
+/* mode toggle / tabs */
+.tabs{ display:inline-flex; border:2px solid var(--ds-border);
+  font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.16em; font-size:.75rem; }
+.tabs button{ padding:10px 20px; background:transparent; color:var(--ds-fg-2); border:0; cursor:pointer;
+  font:inherit; letter-spacing:inherit; }
+.tabs button+button{ border-left:2px solid var(--ds-border); }
+.tabs button[aria-selected="true"]{ background:var(--ds-accent); color:var(--ds-on-accent); }
+
+/* buttons */
+.btn{ display:inline-flex; align-items:center; gap:8px; font-weight:700; padding:12px 24px;
+  border:2px solid var(--ds-accent); cursor:pointer; font-family:inherit; font-size:1rem;
+  transition:background .2s, color .2s, box-shadow .2s; text-decoration:none; }
+.btn-primary{ background:var(--ds-accent); color:var(--ds-on-accent); box-shadow:var(--ds-glow); }
+.btn-primary:hover{ background:var(--ds-accent-emphasis); border-color:var(--ds-accent-emphasis); }
+.btn-secondary{ background:transparent; color:var(--ds-accent); }
+.btn-secondary:hover{ background:var(--ds-accent); color:var(--ds-on-accent); }
+
+/* cards */
+.card{ background:var(--ds-surface); border:1px solid var(--ds-border); padding:24px;
+  transition:border-color .2s, box-shadow .2s; }
+.card:hover{ border-color:var(--ds-accent); }
+[data-mode="balada"] .card:hover{ box-shadow:var(--ds-glow); }
+
+.testimonial{ background:var(--ds-surface); border-left:2px solid var(--ds-accent); padding:16px 24px; }
+.testimonial figcaption{ margin-top:12px; }
+
+.badge{ display:inline-block; font-family:'IBM Plex Mono',monospace; text-transform:uppercase;
+  letter-spacing:.16em; font-size:.75rem; color:var(--ds-fg-2); border:1px solid var(--ds-border); padding:4px 8px; }
+
+/* grids */
+.grid{ display:grid; gap:16px; }
+.g2{ grid-template-columns:repeat(2,1fr); }
+.g3{ grid-template-columns:repeat(3,1fr); }
+.g4{ grid-template-columns:repeat(4,1fr); }
+@media(max-width:900px){ .g4{grid-template-columns:repeat(2,1fr)} .g3{grid-template-columns:repeat(2,1fr)} }
+
+/* two-mode comparison panels */
+.modes{ display:grid; grid-template-columns:1fr 1fr; gap:24px; }
+@media(max-width:900px){ .modes{grid-template-columns:1fr} }
+.panel{ background:var(--ds-bg); color:var(--ds-fg); border:2px solid var(--ds-border); padding:32px; }
+.panel .display{ font-size:2rem; margin:10px 0 6px; }
+.panel .swrow{ display:flex; gap:0; margin-top:20px; border:1px solid var(--ds-border); }
+.panel .swrow div{ height:44px; flex:1; }
+
+/* swatches */
+.sw{ border:1px solid var(--ds-border); }
+.sw .chip{ height:72px; }
+.sw .meta{ padding:10px 12px; }
+.sw .name{ font-family:'Unbounded',sans-serif; font-weight:600; font-size:.9rem; }
+.sw .hex{ font-family:'IBM Plex Mono',monospace; font-size:.7rem; color:var(--ds-fg-2); letter-spacing:.04em; }
+
+.type-row{ padding:16px 0; border-top:1px solid var(--ds-border); display:flex; align-items:baseline; gap:20px; flex-wrap:wrap; }
+.type-row .tag{ width:190px; flex-shrink:0; }
+
+.note{ display:flex; gap:12px; align-items:flex-start; padding:16px; border:1px solid var(--ds-border); background:var(--ds-surface); }
+.note .dot{ width:14px; height:14px; flex-shrink:0; margin-top:4px; border:2px solid var(--ds-accent); }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <span class="wordmark" style="font-size:26px;">GLE<span class="hollow">IB</span></span>
+    <div class="tabs" role="tablist" aria-label="Modo">
+      <button role="tab" aria-selected="true"  onclick="setMode('eventos',this)">Modo Eventos</button>
+      <button role="tab" aria-selected="false" onclick="setMode('balada',this)">Modo Balada</button>
+    </div>
+  </div>
+</header>
+
+<!-- INTRO -->
+<section>
+  <div class="wrap">
+    <span class="kicker">Design System · Etapa 4</span>
+    <h1 class="display" style="margin-top:12px; max-width:16ch;">Uns tocam música.<br>Eu comando o momento.</h1>
+    <p class="body muted" style="margin-top:16px; max-width:60ch;">
+      Uma marca, dois modos. Este kit compila o brand book aprovado em tokens, componentes e layout para o site-portfólio do DJ Gleib. Use o seletor no topo para ver a página inteira trocar de temperatura.
+    </p>
+    <div style="margin-top:24px; display:flex; gap:12px; flex-wrap:wrap;">
+      <a class="btn btn-primary">Falar no WhatsApp</a>
+      <a class="btn btn-secondary">Ver o portfólio</a>
+    </div>
+  </div>
+</section>
+
+<!-- DOIS MODOS LADO A LADO -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">01 · A grande ideia</span><h2 class="h2">Dois modos, um comando.</h2></div>
+    <div class="modes">
+      <!-- Eventos -->
+      <div class="panel" data-mode="eventos">
+        <span class="kicker">Modo Eventos · sóbrio</span>
+        <div class="display">Sob controle.</div>
+        <p class="small muted">Eu administro seu dia para que você possa vivê-lo.</p>
+        <div style="margin-top:20px;"><a class="btn btn-primary">Falar no WhatsApp</a></div>
+        <div class="swrow">
+          <div style="background:#F1EEE8"></div><div style="background:#F7F4EE"></div>
+          <div style="background:#6D28D9"></div><div style="background:#16131C"></div>
+        </div>
+      </div>
+      <!-- Balada -->
+      <div class="panel" data-mode="balada">
+        <span class="kicker">Modo Balada · energia</span>
+        <div class="display">No comando.</div>
+        <p class="small muted">A euforia é da pista. O comando é meu.</p>
+        <div style="margin-top:20px;"><a class="btn btn-primary">Falar no WhatsApp</a></div>
+        <div class="swrow">
+          <div style="background:#100E14"></div><div style="background:#211B2E"></div>
+          <div style="background:#9B5CFF"></div><div style="background:#F1EEE8"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PALETA -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">02 · Paleta</span><h2 class="h2">A cor vive na marca.</h2></div>
+    <div class="grid g4">
+      <div class="sw"><div class="chip" style="background:#100E14"></div><div class="meta"><div class="name">Preto-Tinta</div><div class="hex">#100E14 · fundo escuro</div></div></div>
+      <div class="sw"><div class="chip" style="background:#211B2E"></div><div class="meta"><div class="name">Uva Fumê</div><div class="hex">#211B2E · superfície</div></div></div>
+      <div class="sw"><div class="chip" style="background:#6D28D9"></div><div class="meta"><div class="name">Púrpura Profunda</div><div class="hex">#6D28D9 · Eventos</div></div></div>
+      <div class="sw"><div class="chip" style="background:#9B5CFF"></div><div class="meta"><div class="name">Púrpura Elétrica</div><div class="hex">#9B5CFF · Balada</div></div></div>
+      <div class="sw"><div class="chip" style="background:#B98CFF"></div><div class="meta"><div class="name">Púrpura Clara</div><div class="hex">#B98CFF · glow/ênfase</div></div></div>
+      <div class="sw"><div class="chip" style="background:#F1EEE8"></div><div class="meta"><div class="name">Osso</div><div class="hex">#F1EEE8 · fundo claro</div></div></div>
+      <div class="sw"><div class="chip" style="background:#16131C"></div><div class="meta"><div class="name">Tinta</div><div class="hex">#16131C · texto claro</div></div></div>
+      <div class="sw"><div class="chip" style="background:#948BA6"></div><div class="meta"><div class="name">Lavanda</div><div class="hex">#948BA6 · texto 2º</div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- TIPOGRAFIA -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">03 · Tipografia</span><h2 class="h2">Unbounded · Space Grotesk · IBM Plex Mono</h2></div>
+    <div class="type-row"><span class="kicker tag">Display · Unbounded 800</span><span class="display">Comando</span></div>
+    <div class="type-row"><span class="kicker tag">H1 · Unbounded 700</span><span class="h1">O maestro da noite</span></div>
+    <div class="type-row"><span class="kicker tag">H2 · Unbounded 700</span><span class="h2">Cada evento, uma prova</span></div>
+    <div class="type-row"><span class="kicker tag">H3 · Unbounded 600</span><span class="h3">Eventos e casamentos</span></div>
+    <div class="type-row"><span class="kicker tag">Corpo · Space Grotesk</span><span class="body">Cada momento conduzido com quem já viu de tudo e não deixa nada ao acaso.</span></div>
+    <div class="type-row"><span class="kicker tag">Label · IBM Plex Mono</span><span class="kicker">Modo Eventos · 128 BPM · Set List</span></div>
+  </div>
+</section>
+
+<!-- COMPONENTES -->
+<section>
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">04 · Componentes</span><h2 class="h2">Blocos-base.</h2></div>
+
+    <h3 class="h3" style="margin-bottom:12px;">Botões</h3>
+    <div style="display:flex; gap:12px; flex-wrap:wrap; margin-bottom:32px;">
+      <a class="btn btn-primary">Falar no WhatsApp</a>
+      <a class="btn btn-secondary">Ver o portfólio</a>
+    </div>
+
+    <h3 class="h3" style="margin-bottom:12px;">Galeria (cards)</h3>
+    <div class="grid g3" style="margin-bottom:32px;">
+      <article class="card"><span class="kicker">Casamento</span><div class="h3" style="margin-top:8px;">Sítio Recanto · 2025</div><p class="small muted" style="margin-top:6px;">300 convidados · cerimônia + festa</p></article>
+      <article class="card"><span class="kicker">Corporativo</span><div class="h3" style="margin-top:8px;">Confraternização XP · 2025</div><p class="small muted" style="margin-top:6px;">Salão + lounge · 4h de set</p></article>
+      <article class="card"><span class="kicker">Balada</span><div class="h3" style="margin-top:8px;">Club Órbita · 2024</div><p class="small muted" style="margin-top:6px;">Pista cheia até as 4h</p></article>
+    </div>
+
+    <h3 class="h3" style="margin-bottom:12px;">Prova social &amp; tags</h3>
+    <div class="grid g2" style="margin-bottom:24px;">
+      <figure class="testimonial"><blockquote class="body">"Não precisei me preocupar com nada no nosso dia. Tudo aconteceu no tempo certo."</blockquote><figcaption class="kicker muted">Marina &amp; Rafa · Casamento</figcaption></figure>
+      <figure class="testimonial"><blockquote class="body">"A pista não esvaziou um segundo. Leitura de público absurda."</blockquote><figcaption class="kicker muted">Club Órbita · Contratante</figcaption></figure>
+    </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap;">
+      <span class="badge">Casamento</span><span class="badge">Corporativo</span><span class="badge">Balada</span><span class="badge">Aniversário</span>
+    </div>
+  </div>
+</section>
+
+<!-- REGRAS -->
+<section style="border-bottom:0;">
+  <div class="wrap">
+    <div class="sec-head"><span class="kicker">05 · Regras da marca</span><h2 class="h2">Sem enfeite. Bordas fazem o trabalho.</h2></div>
+    <div class="grid g2">
+      <div class="note"><span class="dot"></span><div><div class="h3">Cantos vivos (0px)</div><p class="small muted">Nada arredondado, exceto círculos (avatar/símbolo).</p></div></div>
+      <div class="note"><span class="dot"></span><div><div class="h3">Bordas 1–2px, sem sombra suave</div><p class="small muted">A separação vem da borda na cor da paleta, não de drop-shadow.</p></div></div>
+      <div class="note"><span class="dot"></span><div><div class="h3">Glow só no Modo Balada</div><p class="small muted">O brilho roxo (Púrpura Clara) é energia; o Eventos é sóbrio, sem glow.</p></div></div>
+      <div class="note"><span class="dot"></span><div><div class="h3">Fotos em P&amp;B contrastado</div><p class="small muted">A cor vive no accent da marca, não na foto.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<footer style="background:#100E14; color:#F1EEE8; padding:48px 0; border-top:2px solid #2A2536;">
+  <div class="wrap" style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;">
+    <span class="wordmark" style="font-size:22px;">No comando do seu momento.</span>
+    <span class="kicker" style="color:#948BA6;">DJ Gleib · @gleibdj</span>
+  </div>
+</footer>
+
+<script>
+function setMode(mode, btn){
+  document.documentElement.setAttribute('data-mode', mode);
+  document.querySelectorAll('.tabs [role=tab]').forEach(t=>t.setAttribute('aria-selected','false'));
+  btn.setAttribute('aria-selected','true');
+}
+</script>
+</body>
+</html>
