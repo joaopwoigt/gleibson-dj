@@ -44,7 +44,9 @@ export default function RootLayout({
       data-mode="eventos"
       className={`${unbounded.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col bg-bg text-fg transition-colors duration-250 ease-command">
+        {children}
+      </body>
     </html>
   );
 }
