@@ -27,10 +27,33 @@ const ibmPlexMono = IBM_Plex_Mono({
   display: "swap",
 });
 
-// Placeholder mínimo — metadata completa, Open Graph e favicon vêm na Task 18.
+// URL base para as URLs absolutas de OG. Domínio final é definido na Task 27 —
+// por ora, a URL da Vercel. Trocar aqui quando o .com.br apontar.
+const SITE_URL = "https://gleibson-dj.vercel.app";
+// Copy da marca (messaging.md): assinatura (frase 1) + categoria + fecho (frase 8).
+const TITLE = "DJ Gleib — Uns tocam música. Eu comando o momento.";
+const DESCRIPTION =
+  "DJ de eventos e balada, do casamento à pista. No comando do seu momento.";
+
 export const metadata: Metadata = {
-  title: "DJ Gleib",
-  description: "Site-portfólio do DJ Gleib.",
+  metadataBase: new URL(SITE_URL),
+  title: TITLE,
+  description: DESCRIPTION,
+  openGraph: {
+    title: TITLE,
+    description: DESCRIPTION,
+    url: "/",
+    siteName: "DJ Gleib",
+    locale: "pt_BR",
+    type: "website",
+    images: [{ url: "/og.png", width: 1200, height: 630, alt: "DJ Gleib" }],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: TITLE,
+    description: DESCRIPTION,
+    images: ["/og.png"],
+  },
 };
 
 export default function RootLayout({

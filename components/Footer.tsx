@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/Button";
-
-const WHATSAPP_URL = "https://wa.me/";
-const INSTAGRAM_URL = "https://instagram.com/gleibdj";
+import { INSTAGRAM_HANDLE, INSTAGRAM_URL, whatsappUrl } from "@/lib/contact";
 
 /**
  * Footer — the brand's constant dark anchor (layouts.md: Preto-Tinta fixo).
@@ -28,9 +26,9 @@ export function Footer() {
             rel="noopener noreferrer"
             className="font-mono text-label uppercase tracking-[0.16em] text-fg-2 transition-colors duration-200 ease-command hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
           >
-            @gleibdj
+            {INSTAGRAM_HANDLE}
           </a>
-          <Button href={WHATSAPP_URL}>Falar no WhatsApp</Button>
+          <Button href={whatsappUrl()}>Falar no WhatsApp</Button>
         </div>
       </div>
     </footer>

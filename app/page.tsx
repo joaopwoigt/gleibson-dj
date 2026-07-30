@@ -8,6 +8,8 @@ import { Hero } from "@/components/sections/Hero";
 import { ModeContent } from "@/components/sections/ModeContent";
 import { Gallery } from "@/components/sections/Gallery";
 import { VideoGallery } from "@/components/sections/VideoGallery";
+import { Testimonials } from "@/components/sections/Testimonials";
+import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export default function Home() {
   return (
@@ -19,7 +21,8 @@ export default function Home() {
         <ModeContent />
         <Gallery />
         <VideoGallery />
-        {/* prova social (Task 16) · CTA (Task 17) */}
+        <Testimonials />
+        <FinalCTA />
       </main>
 
       <Footer />

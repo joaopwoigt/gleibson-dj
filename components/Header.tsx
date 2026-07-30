@@ -1,9 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/Button";
 import { ModeTabs } from "@/components/ModeTabs";
-
-// WhatsApp base link — a mensagem pré-preenchida é finalizada na Task 17.
-const WHATSAPP_URL = "https://wa.me/";
+import { whatsappUrl } from "@/lib/contact";
 
 /**
  * Header — sticky top bar: wordmark + Mode Tabs + WhatsApp CTA. View component.
@@ -39,7 +37,7 @@ export function Header() {
           {/* WhatsApp oculto no mobile (<640) — layouts.md; wrapper evita conflito
               de display com o inline-flex do Button. */}
           <div className="hidden sm:block">
-            <Button href={WHATSAPP_URL}>WhatsApp</Button>
+            <Button href={whatsappUrl()}>WhatsApp</Button>
           </div>
         </div>
       </div>

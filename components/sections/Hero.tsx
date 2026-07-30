@@ -1,9 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Kicker } from "@/components/ui/Kicker";
-
-// WhatsApp base link — mensagem pré-preenchida na Task 17.
-const WHATSAPP_URL = "https://wa.me/";
+import { whatsappUrl } from "@/lib/contact";
 
 /**
  * Hero — a abertura da página. Comum aos dois modos: a headline é a assinatura
@@ -31,7 +29,7 @@ export function Hero() {
         </p>
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Button href={WHATSAPP_URL}>Falar no WhatsApp</Button>
+          <Button href={whatsappUrl()}>Falar no WhatsApp</Button>
           {/* Âncora resolve quando a galeria (Task 13) existir com id="portfolio". */}
           <Button variant="secondary" href="#portfolio">
             Ver o portfólio
