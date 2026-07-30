@@ -6,6 +6,8 @@ import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { ModeContent } from "@/components/sections/ModeContent";
+import { Gallery } from "@/components/sections/Gallery";
+import { VideoGallery } from "@/components/sections/VideoGallery";
 
 export default function Home() {
   return (
@@ -15,7 +17,9 @@ export default function Home() {
       <main className="mx-auto w-full max-w-content flex-1 px-4">
         <Hero />
         <ModeContent />
-        {/* galeria (Task 13) · prova social (Task 16) · CTA (Task 17) */}
+        <Gallery />
+        <VideoGallery />
+        {/* prova social (Task 16) · CTA (Task 17) */}
       </main>
 
       <Footer />

@@ -1,0 +1,5 @@
+# Fotos cruas de origem (entrada do pipeline) — nao versionar, podem ser pesadas.
+# O site serve os WebP gerados em public/gallery/, nao estes brutos.
+*
+!.gitignore
+!README.md
