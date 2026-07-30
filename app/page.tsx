@@ -5,6 +5,7 @@
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/sections/Hero";
+import { ModeContent } from "@/components/sections/ModeContent";
 
 export default function Home() {
   return (
@@ -13,7 +14,8 @@ export default function Home() {
 
       <main className="mx-auto w-full max-w-content flex-1 px-4">
         <Hero />
-        {/* MODO (Task 11) · galeria (Task 13) · prova social (Task 16) · CTA (Task 17) */}
+        <ModeContent />
+        {/* galeria (Task 13) · prova social (Task 16) · CTA (Task 17) */}
       </main>
 
       <Footer />

@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+/* Variants por modo (Task 11): reagem ao [data-mode] ancestral para mostrar/
+   esconder conteudo especifico de cada modo, 100% via CSS (sem estado React). */
+@custom-variant eventos ([data-mode="eventos"] &);
+@custom-variant balada ([data-mode="balada"] &);
+
 /* ===========================================================================
    Design System DJ Gleib — base dual-mode (Etapa 4, portada para Tailwind v4)
    Fonte de verdade: design-system/tokens.md. Ver design-system/PORTING-NOTES.md
