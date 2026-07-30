@@ -2,14 +2,14 @@
 
 Site-portfólio do **DJ Gleib** (Gleibson Santos Possidonio, @gleibdj) — cliente da w² Agência.
 
-Site estático dual-mode (Eventos / Balada), sem servidor. Deploy no Cloudflare Pages.
+Site estático dual-mode (Eventos / Balada), sem servidor. Deploy na Vercel (plano Pro).
 
 ## Stack
 
 - Next.js 16 (App Router) + TypeScript
 - Tailwind v4 (CSS-first)
 - Export estático (`output: 'export'` → pasta `out/`)
-- Deploy: Cloudflare Pages
+- Deploy: Vercel (plano Pro — uso comercial; Hobby vetado por ToS)
 
 ## Rodar localmente
 
