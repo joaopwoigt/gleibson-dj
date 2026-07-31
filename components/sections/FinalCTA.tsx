@@ -10,7 +10,10 @@ export function FinalCTA() {
   return (
     <section id="contato" className="border-t border-line py-16 lg:py-24">
       <div className="bg-accent px-6 py-12 text-on-accent shadow-glow lg:px-14 lg:py-16">
-        <span className="font-mono text-label uppercase tracking-[0.16em] text-on-accent/80">
+        {/* on-accent em cheio (sem /80): a 80% o texto escuro do Balada clareia
+            para 3.9:1 sobre a púrpura elétrica e reprova no AA (Lighthouse Task 23).
+            Full passa nos dois modos (7.1 Eventos / 4.9 Balada). */}
+        <span className="font-mono text-label uppercase tracking-[0.16em] text-on-accent">
           Vamos conversar
         </span>
         <h2 className="mt-4 max-w-[18ch] font-display text-h1 font-bold text-on-accent">
