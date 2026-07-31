@@ -14,9 +14,13 @@ import { isMode, type Mode } from "@/lib/mode";
  * attribute and the URL) happens in the sync effect — the sanctioned place to
  * push React state into an external system.
  */
+// label = nome curto (rótulo visível no mobile). No desktop o prefixo "Modo " é
+// revelado por CSS (sm:inline). O nome acessível é fixado por aria-label na tab,
+// então não muda com o viewport. Fix Task 19: antes o texto longo quebrava em 2
+// linhas <640px (anotado na validação da Task 08).
 const TABS: ReadonlyArray<{ mode: Mode; label: string }> = [
-  { mode: "eventos", label: "Modo Eventos" },
-  { mode: "balada", label: "Modo Balada" },
+  { mode: "eventos", label: "Eventos" },
+  { mode: "balada", label: "Balada" },
 ];
 
 export function ModeTabs() {
@@ -75,10 +79,11 @@ export function ModeTabs() {
             type="button"
             role="tab"
             aria-selected={active}
+            aria-label={`Modo ${tab.label}`}
             tabIndex={active ? 0 : -1}
             onClick={() => setMode(tab.mode)}
             className={cx(
-              "px-5 py-2.5 transition-colors duration-200 ease-command",
+              "whitespace-nowrap px-3 py-2.5 transition-colors duration-200 ease-command sm:px-5",
               "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
               index > 0 && "border-l-2 border-line",
               active
@@ -86,6 +91,7 @@ export function ModeTabs() {
                 : "bg-transparent text-fg-2 hover:text-fg",
             )}
           >
+            <span aria-hidden className="hidden sm:inline">Modo&nbsp;</span>
             {tab.label}
           </button>
         );
