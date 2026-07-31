@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { Kicker } from "@/components/ui/Kicker";
+import { gallery } from "@/config/content";
 import { whatsappUrl } from "@/lib/contact";
 
 /**
@@ -30,10 +31,14 @@ export function Hero() {
 
         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
           <Button href={whatsappUrl()}>Falar no WhatsApp</Button>
-          {/* Âncora resolve quando a galeria (Task 13) existir com id="portfolio". */}
-          <Button variant="secondary" href="#portfolio">
-            Ver o portfólio
-          </Button>
+          {/* Só renderiza quando há portfólio real: a âncora #portfolio só existe
+              se a galeria tiver fotos (graceful-empty). Evita CTA morto no estado
+              vazio atual; reaparece sozinho quando a galeria for populada (Fase 6). */}
+          {gallery.length > 0 && (
+            <Button variant="secondary" href="#portfolio">
+              Ver o portfólio
+            </Button>
+          )}
         </div>
       </div>
 
