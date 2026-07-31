@@ -21,6 +21,25 @@ npm run dev     # dev server em http://localhost:3000
 npm run build   # gera o site estático em out/
 ```
 
+## QA (smoke Playwright)
+
+Suíte mínima de regressão em `qa/` (§ QA Baseline). Roda contra o build de produção
+`out/` servido por `qa/serve.mjs`, **com os mesmos headers do `vercel.json`** (inclui
+a CSP) — reproduz produção e pega regressão de CSP como erro de console.
+
+```bash
+npm run qa        # builda (out/) e roda o smoke
+npm run qa:only   # só roda o smoke (assume out/ já buildado)
+```
+
+Cobre: home sem erro de console (status < 400), dual-mode (Eventos↔Balada), deep-link
+`?modo=balada`, links de contato (WhatsApp com mensagem + Instagram), integridade das
+headlines aprovadas e graceful-empty (galeria/vídeo/depoimentos ausentes com config
+vazio). Browser: Chromium (`npx playwright install chromium` na primeira vez).
+
+No Windows, se sobrar servidor zumbi na porta 4400: `netstat -ano | findstr :4400`
+e `taskkill /PID <pid> /F` (não use `pkill`).
+
 ## Documentação (mora no hub da w²)
 
 O código vive aqui; o planejamento, o design system e as tasks vivem no hub, em `clientes/gleibson-dj/`:
