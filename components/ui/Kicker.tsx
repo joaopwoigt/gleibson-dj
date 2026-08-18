@@ -2,12 +2,14 @@ import type { ElementType, ReactNode } from "react";
 import { cx } from "@/lib/cx";
 
 /**
- * Kicker / Badge — technical label in IBM Plex Mono that organizes sections and
- * tags. View component (playbook §10): props only, no state.
+ * Kicker / Badge — technical label that organizes sections and tags.
+ * View component (playbook §10): props only, no state.
  *
+ * Brand book v2 (2026-08-18): o ar "tecnico" vem do PESO 600 + tracking largo,
+ * nao mais de uma familia monoespacada (a IBM Plex Mono saiu; tudo e Poppins).
  * Always UPPERCASE with wide tracking (the `text-label` token already carries
  * letter-spacing 0.16em; kept explicit here to mirror the design system).
- * Source: design-system/components.md §5.
+ * Source: design-system/components.md §5 + brand-book §4.3.
  *
  * - tone="accent" (default): section kicker (e.g. "02 · Portfólio").
  * - tone="muted": secondary label in fg-2.
@@ -39,7 +41,7 @@ export function Kicker({
   return (
     <Tag
       className={cx(
-        "font-mono text-label uppercase tracking-[0.16em]",
+        "text-label font-semibold uppercase tracking-[0.16em]",
         tones[tone],
         bordered && "inline-block border border-line px-2 py-1",
         className,

@@ -110,19 +110,20 @@ Depoimentos de noivos/empresas/contratantes (proposta: até 8). A "prova visíve
 
 ## 5. Kicker / Badge
 
-Rótulo técnico em IBM Plex Mono — dá o ar "preciso/no comando" e organiza as seções.
+Rótulo técnico em Poppins 600 com tracking largo — dá o ar "preciso/no comando" e organiza as seções. **É o tracking, não a família, que faz o papel técnico** (v2: a monoespaçada saiu).
 
 ```html
 <!-- Kicker de seção -->
-<span class="font-mono text-label uppercase tracking-[0.16em] text-accent">01 · Apresentação</span>
+<span class="text-label font-semibold uppercase tracking-[0.16em] text-accent">01 · Apresentação</span>
 
 <!-- Badge de tag (galeria/filtro) -->
-<span class="inline-block font-mono text-label uppercase tracking-[0.16em]
+<span class="inline-block text-label font-semibold uppercase tracking-[0.16em]
              text-fg-2 border border-line px-2 py-1">Corporativo</span>
 ```
 
-- Sempre UPPERCASE, tracking largo (0.16em). Nunca em frase corrida.
-- Origem: brand-book §4.3 (label/kicker IBM Plex Mono).
+- Sempre UPPERCASE, peso 600, tracking largo (0.16em). Nunca em frase corrida.
+- Origem: brand-book §4.3 (label/kicker Poppins 600).
+- `font-mono` ainda existe no preset como alias de Poppins (legado). Não usar em código novo.
 
 ---
 
@@ -150,14 +151,19 @@ Envelope de seção com kicker + título + conteúdo e ritmo vertical consistent
 ## 7. Header / Nav + Footer
 
 ```html
-<!-- Header: wordmark + mode tabs + CTA. Fundo = bg do modo -->
+<!-- Header: logotipo bloco + mode tabs + CTA. Fundo = bg do modo -->
 <header class="bg-bg/95 backdrop-blur border-b-2 border-line sticky top-0 z-50">
   <div class="max-w-content mx-auto px-4 h-16 flex items-center justify-between">
-    <span class="font-display font-extrabold text-fg text-xl tracking-[-0.01em]">
-      GLE<span style="-webkit-text-stroke:1.5px var(--ds-accent); color:transparent;">IB</span>
+    <!-- Logotipo bloco: DJ (vazado no accent) + GLEIB, contorno único.
+         O contorno é PARTE do logo — nunca remover. brand-book §4.4 -->
+    <span class="inline-flex font-extrabold leading-none tracking-[-0.03em] text-xl
+                 border-[1.5px] border-fg">
+      <span class="flex items-center px-[0.44em] py-[0.36em] bg-accent text-on-accent
+                   border-r-[1.5px] border-fg">DJ</span>
+      <span class="flex items-center px-[0.44em] py-[0.36em] text-fg">GLEIB</span>
     </span>
     <!-- mode tabs (componente 2) -->
-    <a class="hidden sm:inline-flex bg-accent text-on-accent font-body font-bold px-5 py-2.5 border-2 border-accent shadow-glow">
+    <a class="hidden sm:inline-flex bg-accent text-on-accent font-semibold px-5 py-2.5 border-2 border-accent shadow-glow">
       WhatsApp
     </a>
   </div>
@@ -166,13 +172,14 @@ Envelope de seção com kicker + título + conteúdo e ritmo vertical consistent
 <!-- Footer: assinatura curta + contato -->
 <footer class="bg-pretotinta text-osso py-12 border-t-2 border-borda-escura">
   <div class="max-w-content mx-auto px-4 flex flex-col sm:flex-row justify-between gap-4">
-    <span class="font-display font-bold text-xl">No comando do seu momento.</span>
-    <span class="font-mono text-label uppercase tracking-[0.16em] text-lavanda">DJ Gleib · @gleibdj</span>
+    <span class="font-bold text-xl tracking-[-0.02em]">No comando do seu momento.</span>
+    <span class="text-label font-semibold uppercase tracking-[0.16em] text-lavanda">DJ Gleib · @gleibdj</span>
   </div>
 </footer>
 ```
 
-- O wordmark reproduz o "GLE" cheio + "IB" vazado (contorno no accent) — brand-book §4.4.
+- O logotipo bloco tem duas células (`DJ` sólido no accent + `GLEIB` sobre o fundo) dentro de um contorno único — brand-book §4.4. Proibido: remover o contorno, separar as células, inverter a ordem.
+- Respiro mínimo ao redor do logo = a largura da célula `DJ`. Altura mínima: 24px na tela.
 - Footer fixo em Preto-Tinta (independe do modo) com a assinatura curta "No comando do seu momento." (brand-book §1). Origem: brand-book §1/§4.4.
 
 ---
@@ -181,6 +188,7 @@ Envelope de seção com kicker + título + conteúdo e ritmo vertical consistent
 
 - [ ] Usa tokens semânticos (funciona nos dois modos sem `if`)?
 - [ ] Cantos vivos (0px), exceto círculos? Borda 1–2px em vez de sombra suave?
-- [ ] Kickers/labels em IBM Plex Mono UPPERCASE tracking 0.16em?
+- [ ] Kickers/labels em Poppins 600 UPPERCASE tracking 0.16em?
+- [ ] Só Poppins? (nenhuma segunda família introduzida)
 - [ ] Contraste do texto passa AA no modo em que aparece (ver tokens.md §3)?
 - [ ] Documentado aqui com exemplo e origem no brand book?

@@ -28,7 +28,7 @@ export function Testimonials() {
             <blockquote className="font-body text-body leading-relaxed text-fg">
               {testimonial.quote}
             </blockquote>
-            <figcaption className="mt-3 font-mono text-label uppercase tracking-[0.16em] text-fg-2">
+            <figcaption className="mt-3 text-label font-semibold uppercase tracking-[0.16em] text-fg-2">
               {testimonial.author} · {testimonial.role}
             </figcaption>
           </figure>

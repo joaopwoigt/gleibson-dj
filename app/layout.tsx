@@ -1,29 +1,17 @@
 import type { Metadata } from "next";
-import { Unbounded, Space_Grotesk, IBM_Plex_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 
-// Fontes da marca (tokens.md §4). next/font/google baixa e self-hosta no build:
-// nenhum request a fonts.gstatic.com em runtime. Nomes de var próprios para não
-// colidir com os tokens --font-display/body/mono do @theme (Task 02); o @theme
-// referencia estas vars e adiciona os fallbacks.
-const unbounded = Unbounded({
-  variable: "--font-unbounded",
+// Fonte da marca (tokens.md §4). next/font/google baixa e self-hosta no build:
+// nenhum request a fonts.gstatic.com em runtime.
+//
+// v2 do brand book (2026-08-18): UMA só família — Poppins. Peso e tracking fazem
+// toda a hierarquia; não existe segunda família para resolver contraste.
+// (Antes: Unbounded + Space Grotesk + IBM Plex Mono.)
+const poppins = Poppins({
+  variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["600", "700", "800"],
-  display: "swap",
-});
-
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-space-grotesk",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  display: "swap",
-});
-
-const ibmPlexMono = IBM_Plex_Mono({
-  variable: "--font-ibm-plex-mono",
-  subsets: ["latin"],
-  weight: ["400", "500"],
+  weight: ["400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -65,7 +53,7 @@ export default function RootLayout({
     <html
       lang="pt-BR"
       data-mode="eventos"
-      className={`${unbounded.variable} ${spaceGrotesk.variable} ${ibmPlexMono.variable} h-full antialiased`}
+      className={`${poppins.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-bg text-fg transition-colors duration-250 ease-command">
         {children}

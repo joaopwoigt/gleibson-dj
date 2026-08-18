@@ -104,23 +104,29 @@ Origem: brand-book §4.2 (pares AA + proibições).
 
 ## 4. Tipografia
 
-Origem: brand-book §4.3 (sistema tipográfico). Fonte: Google Fonts.
+Origem: brand-book §4.3 (sistema tipográfico, **revisado na v2 — 2026-08-18**). Fonte: Google Fonts.
+
+> **Mudança da v2:** o sistema saiu de três famílias (Unbounded / Space Grotesk / IBM Plex Mono) para **uma só: Poppins**. Peso e tracking fazem toda a hierarquia — não existe segunda família para resolver contraste. O tracking largo no label assume o papel que a monoespaçada tinha.
 
 ```
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 ```
 
 | Papel | Família | Peso | Tamanho (web) | Tracking / notas | Origem |
 |-------|---------|------|---------------|------------------|--------|
-| Display / Wordmark | **Unbounded** | 800 | 40–56px | `letter-spacing: -0.01em`, `line-height: 1.02` | brand-book §4.3 |
-| H1 | Unbounded | 700 | 32–40px | `-0.01em`, `line-height: 1.05` | brand-book §4.3 |
-| H2 | Unbounded | 700 | 24px | `-0.01em`, `line-height: 1.1` | brand-book §4.3 |
-| H3 / destaque | Unbounded | 600 | 16–18px | `line-height: 1.2` | brand-book §4.3 |
-| Corpo | **Space Grotesk** | 400 / 500 | 15–16px | `line-height: 1.6` | brand-book §4.3 |
-| Corpo forte / botão | Space Grotesk | 600 / 700 | 15–16px | — | brand-book §4.3 |
-| Label / kicker / dado | **IBM Plex Mono** | 400 / 500 | 11–13px | `UPPERCASE`, `letter-spacing: 0.16em` | brand-book §4.3 |
+| Display / Logotipo | **Poppins** | 800 | 40–56px | `letter-spacing: -0.03em`, `line-height: 0.98–1.04` | brand-book §4.3 |
+| H1 | Poppins | 700 | 32–40px | `-0.02em`, `line-height: 1.05` | brand-book §4.3 |
+| H2 | Poppins | 700 | 24px | `-0.02em`, `line-height: 1.1` | brand-book §4.3 |
+| H3 / destaque | Poppins | 600 | 16–18px | `-0.015em`, `line-height: 1.2` | brand-book §4.3 |
+| Corpo | Poppins | 400 / 500 | 15–16px | tracking normal, `line-height: 1.6` | brand-book §4.3 |
+| Corpo forte / botão | Poppins | 600 | 15–16px | — | brand-book §4.3 |
+| Label / kicker / dado | Poppins | 600 | 11–13px | `UPPERCASE`, `letter-spacing: 0.16em` (tela) / `0.22em` (impresso) | brand-book §4.3 |
 
-**Fallbacks:** Unbounded → `system-ui, sans-serif`; Space Grotesk → `'Inter', system-ui, sans-serif`; IBM Plex Mono → `ui-monospace, monospace`. Origem: brand-book §4.3.
+**Fallback:** Poppins → `system-ui, sans-serif`. Origem: brand-book §4.3.
+
+> **Por que o display aperta tanto (-0.03em):** a Poppins é uma geométrica larga. Sem o aperto, o display perde densidade e o logotipo bloco não fecha. O valor não é estético, é estrutural — vale também para o logo.
+
+> **Nota de migração:** as classes utilitárias `font-display` / `font-body` / `font-mono` continuam existindo no preset para não quebrar o código que já as usa, mas **as três apontam para Poppins**. `font-mono` é legado; em código novo, usar `font-body` com peso 600 e tracking de label.
 
 ---
 

@@ -34,7 +34,7 @@ Kit de design **compilado a partir do brand book aprovado** (Etapa 3). É a base
    const gleib = require('./design-system/tailwind-preset.js')
    module.exports = { presets: [gleib], content: ['./app/**/*.{ts,tsx,html}'] }
    ```
-3. **Importe as fontes** (Unbounded / Space Grotesk / IBM Plex Mono) — `@import` em tokens.md §4.
+3. **Importe a fonte** (Poppins, família única) — `@import` em tokens.md §4.
 4. **Estilize com tokens semânticos** (`bg-bg`, `text-fg`, `text-fg-2`, `bg-accent`, `text-on-accent`, `border-line`) — nunca hardcode hex. Assim o componente funciona nos dois modos.
 5. Ponha `data-mode="eventos"` no `<html>` e troque para `"balada"` via Mode Tabs.
 
@@ -45,7 +45,9 @@ Kit de design **compilado a partir do brand book aprovado** (Etapa 3). É a base
 - **Glow roxo só no Modo Balada** (Eventos é sóbrio). brand-book §4.2.
 - **Fotos em P&B contrastado** — a cor vive no accent. brand-book §4.6.
 - **Um accent por vez** — nunca as duas púrpuras com igual peso. brand-book §4.7.
-- **Kickers/labels** em IBM Plex Mono UPPERCASE, tracking 0.16em. brand-book §4.3.
+- **Kickers/labels** em Poppins 600 UPPERCASE, tracking 0.16em. brand-book §4.3.
+- **Tipografia:** Poppins e só. Peso e tracking fazem a hierarquia — nunca introduzir uma segunda família. brand-book §4.3.
+- **Logotipo bloco:** `DJ` + `GLEIB` dentro de um contorno único; o contorno é parte do logo. brand-book §4.4.
 
 ## Rastreabilidade
 

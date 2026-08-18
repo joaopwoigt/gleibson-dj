@@ -57,25 +57,29 @@
   --color-sucesso:#2FA36B;
   --color-erro:#E5484D;
 
-  /* --- Fontes: self-hosted via next/font (layout.tsx). As vars --font-unbounded/
-     -space-grotesk/-ibm-plex-mono vem do next/font; aqui adicionamos os fallbacks
-     de tokens.md §4. --- */
-  --font-display: var(--font-unbounded), system-ui, sans-serif;
-  --font-body: var(--font-space-grotesk), "Inter", system-ui, sans-serif;
-  --font-mono: var(--font-ibm-plex-mono), ui-monospace, monospace;
+  /* --- Fonte: self-hosted via next/font (layout.tsx). A var --font-poppins vem
+     do next/font; aqui adicionamos o fallback de tokens.md §4.
+     v2: UMA família. display/body/mono sao aliases da mesma Poppins — `mono` e
+     LEGADO (era IBM Plex Mono), mantido so para nao quebrar codigo existente. --- */
+  --font-display: var(--font-poppins), system-ui, sans-serif;
+  --font-body: var(--font-poppins), system-ui, sans-serif;
+  --font-mono: var(--font-poppins), system-ui, sans-serif;
 
-  /* --- Tipografia (tokens.md secao 4) --- */
+  /* --- Tipografia (tokens.md secao 4) ---
+     v2: a Poppins e uma geometrica larga; sem o aperto o display perde densidade
+     e o logotipo bloco nao fecha. Os trackings abaixo sao estruturais. --- */
   --text-display: clamp(2.5rem, 6vw, 3.5rem);
   --text-display--line-height: 1.02;
-  --text-display--letter-spacing: -0.01em;
+  --text-display--letter-spacing: -0.03em;
   --text-h1: clamp(2rem, 4.5vw, 2.5rem);
   --text-h1--line-height: 1.05;
-  --text-h1--letter-spacing: -0.01em;
+  --text-h1--letter-spacing: -0.02em;
   --text-h2: 1.5rem;
   --text-h2--line-height: 1.1;
-  --text-h2--letter-spacing: -0.01em;
+  --text-h2--letter-spacing: -0.02em;
   --text-h3: 1.125rem;
   --text-h3--line-height: 1.2;
+  --text-h3--letter-spacing: -0.015em;
   --text-body: 1rem;
   --text-body--line-height: 1.6;
   --text-small: 0.875rem;

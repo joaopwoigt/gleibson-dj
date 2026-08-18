@@ -46,18 +46,23 @@ module.exports = {
         erro: '#E5484D',
       },
 
+      // v2 (2026-08-18): uma só família — Poppins. Peso e tracking fazem a
+      // hierarquia. `display`/`body`/`mono` são mantidos como aliases para não
+      // quebrar código existente; `mono` é LEGADO (era IBM Plex Mono) e em
+      // código novo deve ser trocado por `font-body` + peso 600 + text-label.
       fontFamily: {
-        display: ['Unbounded', 'system-ui', 'sans-serif'],
-        body: ['"Space Grotesk"', 'Inter', 'system-ui', 'sans-serif'],
-        mono: ['"IBM Plex Mono"', 'ui-monospace', 'monospace'],
+        display: ['Poppins', 'system-ui', 'sans-serif'],
+        body: ['Poppins', 'system-ui', 'sans-serif'],
+        mono: ['Poppins', 'system-ui', 'sans-serif'],
       },
 
       fontSize: {
         // [size, { lineHeight, letterSpacing }]
-        display: ['clamp(2.5rem, 6vw, 3.5rem)', { lineHeight: '1.02', letterSpacing: '-0.01em' }],
-        h1: ['clamp(2rem, 4.5vw, 2.5rem)', { lineHeight: '1.05', letterSpacing: '-0.01em' }],
-        h2: ['1.5rem', { lineHeight: '1.1', letterSpacing: '-0.01em' }],
-        h3: ['1.125rem', { lineHeight: '1.2' }],
+        // Poppins é larga: o display aperta -0.03em para ganhar densidade.
+        display: ['clamp(2.5rem, 6vw, 3.5rem)', { lineHeight: '1.02', letterSpacing: '-0.03em' }],
+        h1: ['clamp(2rem, 4.5vw, 2.5rem)', { lineHeight: '1.05', letterSpacing: '-0.02em' }],
+        h2: ['1.5rem', { lineHeight: '1.1', letterSpacing: '-0.02em' }],
+        h3: ['1.125rem', { lineHeight: '1.2', letterSpacing: '-0.015em' }],
         body: ['1rem', { lineHeight: '1.6' }],
         small: ['0.875rem', { lineHeight: '1.5' }],
         label: ['0.75rem', { lineHeight: '1', letterSpacing: '0.16em' }],

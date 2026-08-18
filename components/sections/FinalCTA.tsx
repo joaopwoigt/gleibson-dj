@@ -13,7 +13,7 @@ export function FinalCTA() {
         {/* on-accent em cheio (sem /80): a 80% o texto escuro do Balada clareia
             para 3.9:1 sobre a púrpura elétrica e reprova no AA (Lighthouse Task 23).
             Full passa nos dois modos (7.1 Eventos / 4.9 Balada). */}
-        <span className="font-mono text-label uppercase tracking-[0.16em] text-on-accent">
+        <span className="text-label font-semibold uppercase tracking-[0.16em] text-on-accent">
           Vamos conversar
         </span>
         <h2 className="mt-4 max-w-[18ch] font-display text-h1 font-bold text-on-accent">
@@ -32,7 +32,7 @@ export function FinalCTA() {
             href={INSTAGRAM_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="border-b-2 border-transparent font-mono text-label uppercase tracking-[0.16em] text-on-accent transition-colors duration-200 ease-command hover:border-on-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-accent"
+            className="border-b-2 border-transparent text-label font-semibold uppercase tracking-[0.16em] text-on-accent transition-colors duration-200 ease-command hover:border-on-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-accent"
           >
             {INSTAGRAM_HANDLE}
           </a>

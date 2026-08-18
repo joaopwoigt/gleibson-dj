@@ -64,7 +64,7 @@ export function Footer() {
               href={INSTAGRAM_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-mono text-label uppercase tracking-[0.16em] text-fg-2 transition-colors duration-200 ease-command hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+              className="text-label font-semibold uppercase tracking-[0.16em] text-fg-2 transition-colors duration-200 ease-command hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
             >
               {INSTAGRAM_HANDLE}
             </a>

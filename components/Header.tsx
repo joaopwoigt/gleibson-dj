@@ -4,13 +4,18 @@ import { ModeTabs } from "@/components/ModeTabs";
 import { whatsappUrl } from "@/lib/contact";
 
 /**
- * Header — sticky top bar: wordmark + Mode Tabs + WhatsApp CTA. View component.
+ * Header — sticky top bar: logotipo bloco + Mode Tabs + WhatsApp CTA. View component.
  *
- * The wordmark "GLEIB" is recreated in HTML (GLE solid + IB outlined) with the
- * self-hosted Unbounded and semantic tokens, so it swaps color per mode for free
- * (fg + var(--ds-accent) on the stroke). We deliberately do NOT use the wordmark
- * SVG here: it embeds an @import to Google Fonts, which would break the Task 03
- * self-host and add CSP debt for Task 21. Source: design-system/components.md §7.
+ * Brand book v2 (2026-08-18): o wordmark "GLEIB" (GLE cheio + IB vazado) foi
+ * SUBSTITUIDO pelo logotipo bloco — duas celulas dentro de um contorno unico:
+ * `DJ` sobre o bloco de cor-accent + `GLEIB` sobre o fundo. Poppins 800,
+ * tracking -0.03em. O contorno e PARTE do logo, nao moldura — nunca remover.
+ *
+ * Continua recriado em HTML (nao SVG) com a Poppins self-hosted e os tokens
+ * semanticos, entao troca de cor por modo de graca: o bloco pega var(--ds-accent)
+ * e o texto pega var(--ds-on-accent)/fg. O SVG embute @import ao Google Fonts,
+ * o que quebraria o self-host da Task 03 e criaria divida de CSP na Task 21.
+ * Fonte: design-system/components.md §7 + brand-book §4.4.
  */
 export function Header() {
   return (
@@ -23,12 +28,12 @@ export function Header() {
         >
           <span
             aria-hidden
-            className="font-display text-xl font-extrabold tracking-[-0.01em] text-fg"
+            className="inline-flex border-[1.5px] border-fg text-xl font-extrabold leading-none tracking-[-0.03em]"
           >
-            GLE
-            <span style={{ WebkitTextStroke: "1.5px var(--ds-accent)", color: "transparent" }}>
-              IB
+            <span className="flex items-center border-r-[1.5px] border-fg bg-accent px-[0.44em] py-[0.36em] text-on-accent">
+              DJ
             </span>
+            <span className="flex items-center px-[0.44em] py-[0.36em] text-fg">GLEIB</span>
           </span>
         </Link>
 

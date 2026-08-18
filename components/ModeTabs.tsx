@@ -66,7 +66,7 @@ export function ModeTabs() {
       role="tablist"
       aria-label="Modo de atuação"
       onKeyDown={onKeyDown}
-      className="inline-flex border-2 border-line font-mono text-label uppercase tracking-[0.16em]"
+      className="inline-flex border-2 border-line text-label font-semibold uppercase tracking-[0.16em]"
     >
       {TABS.map((tab, index) => {
         const active = tab.mode === mode;

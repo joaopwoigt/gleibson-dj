@@ -26,7 +26,7 @@ export function VideoFacade({ video }: { video: GalleryVideo }) {
         className="group relative flex aspect-video items-center justify-center border border-line bg-surface transition-colors duration-200 ease-command hover:border-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
       >
         <PlayBadge />
-        <span className="absolute inset-x-3 bottom-3 text-left font-mono text-label uppercase tracking-[0.16em] text-fg-2">
+        <span className="absolute inset-x-3 bottom-3 text-left text-label font-semibold uppercase tracking-[0.16em] text-fg-2">
           {video.title} · Instagram
         </span>
       </a>
@@ -68,7 +68,7 @@ export function VideoFacade({ video }: { video: GalleryVideo }) {
         className="pointer-events-none absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-black/70 to-transparent"
       />
       <PlayBadge />
-      <span className="absolute inset-x-3 bottom-3 text-left font-mono text-label uppercase tracking-[0.16em] text-white">
+      <span className="absolute inset-x-3 bottom-3 text-left text-label font-semibold uppercase tracking-[0.16em] text-white">
         {video.title}
       </span>
     </button>

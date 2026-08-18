@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Design System — DJ Gleib</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Unbounded:wght@600;700;800&family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
 
 :root, [data-mode="eventos"]{
   --ds-bg:#F1EEE8; --ds-surface:#F7F4EE; --ds-fg:#16131C; --ds-fg-2:#45424C;
@@ -20,24 +20,29 @@
 
 *{box-sizing:border-box; margin:0; padding:0;}
 body{ background:var(--ds-bg); color:var(--ds-fg);
-  font-family:'Space Grotesk','Inter',system-ui,sans-serif; line-height:1.6;
+  font-family:'Poppins',system-ui,sans-serif; line-height:1.6;
   transition:background .25s ease, color .25s ease; }
 .wrap{ max-width:1120px; margin:0 auto; padding:0 24px; }
 
-.display{ font-family:'Unbounded',system-ui,sans-serif; font-weight:800;
-  font-size:clamp(2.5rem,6vw,3.5rem); line-height:1.02; letter-spacing:-0.01em; }
-.h1{ font-family:'Unbounded',system-ui,sans-serif; font-weight:700; font-size:clamp(2rem,4vw,2.4rem); line-height:1.05; letter-spacing:-0.01em; }
-.h2{ font-family:'Unbounded',system-ui,sans-serif; font-weight:700; font-size:1.5rem; line-height:1.1; letter-spacing:-0.01em; }
-.h3{ font-family:'Unbounded',system-ui,sans-serif; font-weight:600; font-size:1.125rem; line-height:1.2; }
+.display{ font-family:'Poppins',system-ui,sans-serif; font-weight:800;
+  font-size:clamp(2.5rem,6vw,3.5rem); line-height:1.02; letter-spacing:-0.03em; }
+.h1{ font-family:'Poppins',system-ui,sans-serif; font-weight:700; font-size:clamp(2rem,4vw,2.4rem); line-height:1.05; letter-spacing:-0.02em; }
+.h2{ font-family:'Poppins',system-ui,sans-serif; font-weight:700; font-size:1.5rem; line-height:1.1; letter-spacing:-0.02em; }
+.h3{ font-family:'Poppins',system-ui,sans-serif; font-weight:600; font-size:1.125rem; line-height:1.2; letter-spacing:-0.015em; }
 .body{ font-size:1rem; }
 .small{ font-size:.875rem; }
-.kicker{ font-family:'IBM Plex Mono',ui-monospace,monospace; text-transform:uppercase;
-  letter-spacing:.16em; font-size:.75rem; color:var(--ds-accent); font-weight:500; }
+.kicker{ font-family:'Poppins',system-ui,sans-serif; text-transform:uppercase;
+  letter-spacing:.16em; font-size:.75rem; color:var(--ds-accent); font-weight:600; }
 .muted{ color:var(--ds-fg-2); }
 
-/* wordmark GLE cheio + IB vazado */
-.wordmark{ font-family:'Unbounded',sans-serif; font-weight:800; letter-spacing:-0.01em; }
-.wordmark .hollow{ color:transparent; -webkit-text-stroke:1.5px var(--ds-accent); }
+/* logotipo bloco: DJ (vazado no accent) + GLEIB, dentro de um contorno único.
+   O contorno é parte do logo — nunca remover. brand-book §4.4 */
+.logo{ display:inline-flex; font-family:'Poppins',sans-serif; font-weight:800;
+  line-height:1; letter-spacing:-0.03em; border:1.5px solid var(--ds-fg); }
+.logo .dj{ display:flex; align-items:center; padding:.36em .44em;
+  background:var(--ds-accent); color:var(--ds-on-accent);
+  border-right:1.5px solid var(--ds-fg); }
+.logo .name{ display:flex; align-items:center; padding:.36em .44em; color:var(--ds-fg); }
 
 header{ background:var(--ds-bg); border-bottom:2px solid var(--ds-border);
   position:sticky; top:0; z-index:10; }
@@ -49,7 +54,7 @@ section{ padding:64px 0; border-bottom:1px solid var(--ds-border); }
 
 /* mode toggle / tabs */
 .tabs{ display:inline-flex; border:2px solid var(--ds-border);
-  font-family:'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.16em; font-size:.75rem; }
+  font-family:'Poppins',sans-serif; font-weight:600; text-transform:uppercase; letter-spacing:.16em; font-size:.75rem; }
 .tabs button{ padding:10px 20px; background:transparent; color:var(--ds-fg-2); border:0; cursor:pointer;
   font:inherit; letter-spacing:inherit; }
 .tabs button+button{ border-left:2px solid var(--ds-border); }
@@ -73,7 +78,7 @@ section{ padding:64px 0; border-bottom:1px solid var(--ds-border); }
 .testimonial{ background:var(--ds-surface); border-left:2px solid var(--ds-accent); padding:16px 24px; }
 .testimonial figcaption{ margin-top:12px; }
 
-.badge{ display:inline-block; font-family:'IBM Plex Mono',monospace; text-transform:uppercase;
+.badge{ display:inline-block; font-family:'Poppins',sans-serif; font-weight:600; text-transform:uppercase;
   letter-spacing:.16em; font-size:.75rem; color:var(--ds-fg-2); border:1px solid var(--ds-border); padding:4px 8px; }
 
 /* grids */
@@ -95,8 +100,8 @@ section{ padding:64px 0; border-bottom:1px solid var(--ds-border); }
 .sw{ border:1px solid var(--ds-border); }
 .sw .chip{ height:72px; }
 .sw .meta{ padding:10px 12px; }
-.sw .name{ font-family:'Unbounded',sans-serif; font-weight:600; font-size:.9rem; }
-.sw .hex{ font-family:'IBM Plex Mono',monospace; font-size:.7rem; color:var(--ds-fg-2); letter-spacing:.04em; }
+.sw .name{ font-family:'Poppins',sans-serif; font-weight:600; font-size:.9rem; letter-spacing:-0.015em; }
+.sw .hex{ font-family:'Poppins',sans-serif; font-weight:500; font-size:.7rem; color:var(--ds-fg-2); letter-spacing:.06em; }
 
 .type-row{ padding:16px 0; border-top:1px solid var(--ds-border); display:flex; align-items:baseline; gap:20px; flex-wrap:wrap; }
 .type-row .tag{ width:190px; flex-shrink:0; }
@@ -109,7 +114,7 @@ section{ padding:64px 0; border-bottom:1px solid var(--ds-border); }
 
 <header>
   <div class="wrap">
-    <span class="wordmark" style="font-size:26px;">GLE<span class="hollow">IB</span></span>
+    <span class="logo" style="font-size:20px;"><span class="dj">DJ</span><span class="name">GLEIB</span></span>
     <div class="tabs" role="tablist" aria-label="Modo">
       <button role="tab" aria-selected="true"  onclick="setMode('eventos',this)">Modo Eventos</button>
       <button role="tab" aria-selected="false" onclick="setMode('balada',this)">Modo Balada</button>
@@ -183,13 +188,14 @@ section{ padding:64px 0; border-bottom:1px solid var(--ds-border); }
 <!-- TIPOGRAFIA -->
 <section>
   <div class="wrap">
-    <div class="sec-head"><span class="kicker">03 · Tipografia</span><h2 class="h2">Unbounded · Space Grotesk · IBM Plex Mono</h2></div>
-    <div class="type-row"><span class="kicker tag">Display · Unbounded 800</span><span class="display">Comando</span></div>
-    <div class="type-row"><span class="kicker tag">H1 · Unbounded 700</span><span class="h1">O maestro da noite</span></div>
-    <div class="type-row"><span class="kicker tag">H2 · Unbounded 700</span><span class="h2">Cada evento, uma prova</span></div>
-    <div class="type-row"><span class="kicker tag">H3 · Unbounded 600</span><span class="h3">Eventos e casamentos</span></div>
-    <div class="type-row"><span class="kicker tag">Corpo · Space Grotesk</span><span class="body">Cada momento conduzido com quem já viu de tudo e não deixa nada ao acaso.</span></div>
-    <div class="type-row"><span class="kicker tag">Label · IBM Plex Mono</span><span class="kicker">Modo Eventos · 128 BPM · Set List</span></div>
+    <div class="sec-head"><span class="kicker">03 · Tipografia</span><h2 class="h2">Poppins, uma só família</h2></div>
+    <p class="small muted" style="margin-bottom:20px;max-width:60ch;">Peso e tracking fazem toda a hierarquia. Não existe segunda fonte para resolver contraste.</p>
+    <div class="type-row"><span class="kicker tag">Display · Poppins 800</span><span class="display">Comando</span></div>
+    <div class="type-row"><span class="kicker tag">H1 · Poppins 700</span><span class="h1">O maestro da noite</span></div>
+    <div class="type-row"><span class="kicker tag">H2 · Poppins 700</span><span class="h2">Cada evento, uma prova</span></div>
+    <div class="type-row"><span class="kicker tag">H3 · Poppins 600</span><span class="h3">Eventos e casamentos</span></div>
+    <div class="type-row"><span class="kicker tag">Corpo · Poppins 400/500</span><span class="body">Cada momento conduzido com quem já viu de tudo e não deixa nada ao acaso.</span></div>
+    <div class="type-row"><span class="kicker tag">Label · Poppins 600</span><span class="kicker">Modo Eventos · 128 BPM · Set List</span></div>
   </div>
 </section>
 
@@ -237,7 +243,7 @@ section{ padding:64px 0; border-bottom:1px solid var(--ds-border); }
 
 <footer style="background:#100E14; color:#F1EEE8; padding:48px 0; border-top:2px solid #2A2536;">
   <div class="wrap" style="display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap;">
-    <span class="wordmark" style="font-size:22px;">No comando do seu momento.</span>
+    <span style="font-family:'Poppins',sans-serif; font-weight:700; font-size:22px; letter-spacing:-0.02em;">No comando do seu momento.</span>
     <span class="kicker" style="color:#948BA6;">DJ Gleib · @gleibdj</span>
   </div>
 </footer>
