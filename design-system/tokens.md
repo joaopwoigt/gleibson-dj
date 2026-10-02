@@ -55,6 +55,7 @@ Os componentes usam **estes** tokens, não os brutos. Trocam de valor conforme `
 | `--ds-on-accent` | `branco` #FFFFFF | `pretotinta` #100E14 | Texto sobre o accent (botão sólido) |
 | `--ds-border` | `borda-clara` #DAD4CA | `borda-escura` #2A2536 | Bordas e divisórias |
 | `--ds-glow` | `none` (Eventos é sóbrio) | `0 0 24px rgba(155,92,255,.45)` | Brilho de energia (só Balada) |
+| `--ds-photo` | `grayscale(1) contrast(1.18) brightness(1.02)` | `grayscale(1) contrast(1.36) brightness(0.94)` | Filtro P&B da foto, mais duro no Balada |
 
 > **Por que o texto sobre botão troca:** no Eventos o accent é escuro (Púrpura Profunda) → texto branco. No Balada o accent é claro (Púrpura Elétrica) → texto Preto-Tinta. Verificado em AA (§4). Origem: brand-book §4.2 (regra de accent por modo) + mapa modo↔fundo (Eventos=claro, Balada=escuro).
 
@@ -65,11 +66,13 @@ Os componentes usam **estes** tokens, não os brutos. Trocam de valor conforme `
   --ds-bg:#F1EEE8; --ds-surface:#F7F4EE; --ds-fg:#16131C; --ds-fg-2:#45424C;
   --ds-accent:#6D28D9; --ds-accent-emphasis:#6D28D9; --ds-on-accent:#FFFFFF;
   --ds-border:#DAD4CA; --ds-glow:none;
+  --ds-photo:grayscale(1) contrast(1.18) brightness(1.02);
 }
 [data-mode="balada"] {
   --ds-bg:#100E14; --ds-surface:#211B2E; --ds-fg:#F1EEE8; --ds-fg-2:#948BA6;
   --ds-accent:#9B5CFF; --ds-accent-emphasis:#B98CFF; --ds-on-accent:#100E14;
   --ds-border:#2A2536; --ds-glow:0 0 24px rgba(155,92,255,.45);
+  --ds-photo:grayscale(1) contrast(1.36) brightness(0.94);
 }
 ```
 
@@ -109,11 +112,12 @@ Origem: brand-book §4.3 (sistema tipográfico, **revisado na v2 — 2026-08-18*
 > **Mudança da v2:** o sistema saiu de três famílias (Unbounded / Space Grotesk / IBM Plex Mono) para **uma só: Poppins**. Peso e tracking fazem toda a hierarquia — não existe segunda família para resolver contraste. O tracking largo no label assume o papel que a monoespaçada tinha.
 
 ```
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 ```
 
 | Papel | Família | Peso | Tamanho (web) | Tracking / notas | Origem |
 |-------|---------|------|---------------|------------------|--------|
+| Display leve (1ª linha do h1) | Poppins | 300 | 0.785em do display | `-0.045em` — contraste de peso com a 2ª linha em 800 | design One Page (2026-10) |
 | Display / Logotipo | **Poppins** | 800 | 40–56px | `letter-spacing: -0.03em`, `line-height: 0.98–1.04` | brand-book §4.3 |
 | H1 | Poppins | 700 | 32–40px | `-0.02em`, `line-height: 1.05` | brand-book §4.3 |
 | H2 | Poppins | 700 | 24px | `-0.02em`, `line-height: 1.1` | brand-book §4.3 |
@@ -155,7 +159,7 @@ Origem: brand-book §4.3 (sistema tipográfico, **revisado na v2 — 2026-08-18*
 | `space-24` | 96 | padding vertical de seção (desktop) |
 
 **Layout / breakpoints (decisão de design system):**
-- Largura máxima de conteúdo: `1120px`.
+- Largura máxima de conteúdo: `1240px` (era 1120px até o design One Page, 2026-10). Gutter lateral: 16px no mobile, 32px a partir de 640px.
 - Grid da galeria: 2 col (mobile) → 3 col (≥768px) → 4 col (≥1024px), gutter 16px.
 - Breakpoints: `sm 640` · `md 768` · `lg 1024` · `xl 1280`.
 - Ritmo de seção: 64px (mobile) / 96px (desktop) de padding vertical.
@@ -168,3 +172,39 @@ Coerente com "comando tranquilo" (brand-book §2/§3): transições **discretas 
 - Duração: 150–250ms · Easing: `cubic-bezier(0.4, 0, 0.2, 1)`.
 - Troca de modo (Eventos↔Balada): transição de cor de fundo/texto em 250ms.
 - Balada pode ter um leve pulse de glow em elementos-destaque; Eventos não anima glow (é sóbrio).
+
+---
+
+## 7. Textura: o grão (regra de fundo Osso)
+
+**Regra:** sempre que o fundo for `osso` (#F1EEE8), o efeito de fundo em grão é aplicado, e **só no Modo Eventos** (`[data-mode="eventos"]`). O Modo Balada nunca recebe grão, nem em blocos Osso. Fundos que não são Osso (Superfície Clara, accent) também não recebem.
+
+**O que é:** ruído monocromático fixo, gerado por SVG `feTurbulence` inline (`type="fractalNoise"`, `numOctaves=4`, `stitchTiles="stitch"`, dessaturado por `feColorMatrix saturate 0`). Sem imagem e sem `data:` URI, então não mexe na CSP. Três camadas, todas `pointer-events: none` e `aria-hidden`:
+
+| Camada | Posição | `baseFrequency` | Opacidade (ciclo) | Ciclo |
+|---|---|---|---|---|
+| Papel | `fixed`, atrás do conteúdo (z -1 dentro do root isolado) | 0.62 | .12 → .16 → .12 | 26s |
+| Superfície | `fixed`, por cima do conteúdo (z 90) | 0.44 | .42 → .32 → .42 (mobile <768px: .30 → .24) | 34s |
+| Header | `absolute` dentro da barra sticky, que tem fundo opaco | 0.44 | igual à Superfície | 34s |
+
+**Regras do efeito:**
+- **O grão nunca se desloca.** Papel não se mexe; grão que rasteja vira chuvisco de TV. A única propriedade animada é `opacity`, `ease-in-out`, `infinite`. Ciclos diferentes evitam que as camadas pulsem juntas.
+- Ficam ACIMA da camada Superfície (z 91+): a foto do hero e os botões de contato. A foto não recebe grão.
+- Sem gradiente e sem sombra: é textura, não iluminação (brand-book §4.7).
+- `prefers-reduced-motion`: grão estático na opacidade média (Papel .14, Superfície .37).
+
+```css
+@keyframes grain-paper   { 0%, 100% { opacity: .12; } 50% { opacity: .16; } }
+@keyframes grain-surface { 0%, 100% { opacity: .42; } 50% { opacity: .32; } }
+.grain-paper   { animation: grain-paper 26s ease-in-out infinite; }
+.grain-surface { animation: grain-surface 34s ease-in-out infinite; }
+@media (max-width: 767px) {
+  @keyframes grain-surface { 0%, 100% { opacity: .30; } 50% { opacity: .24; } }
+}
+@media (prefers-reduced-motion: reduce) {
+  .grain-paper   { animation-name: none; opacity: .14; }
+  .grain-surface { animation-name: none; opacity: .37; }
+}
+```
+
+> **Origem:** decisão de 2026-08-19 (`company/decisoes/log.md`), que definiu o grão para o Modo Eventos. Valores calibrados no design "DJ Gleib One Page" (Claude Design, 2026-10) e implementados em `components/Grain.tsx` do site.

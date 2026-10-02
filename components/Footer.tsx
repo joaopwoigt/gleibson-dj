@@ -1,74 +1,63 @@
-import { Button } from "@/components/ui/Button";
+import { footer } from "@/config/content";
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL, whatsappUrl } from "@/lib/contact";
-import { cx } from "@/lib/cx";
 
 /**
- * Footer — the brand's constant dark anchor (layouts.md: Preto-Tinta fixo).
- *
- * O bloco de conteúdo pina `data-mode="balada"`: cor/token resolvem no escuro
- * independentemente do modo da página — o footer nunca vira com a troca de modo.
- *
- * A EXCEÇÃO é a waveform de assinatura (brand-book §4.4): ela fica ACIMA do bloco
- * escuro, no fundo do modo da página, e é o único elemento do rodapé que acompanha
- * o modo — baixa e regular no Eventos, alta e irregular no Balada. Traduz a "grande
- * ideia" (dois modos, um comando) também no fecho da página.
+ * Footer — a âncora escura fixa da marca (Preto-Tinta nos dois modos, cores da
+ * paleta bruta, não dos tokens por modo). Abre com a waveform de assinatura:
+ * linha de base apagada que "acorda" na metade direita. Estática e determinística
+ * (mesmo render no servidor e no cliente). Logotipo bloco invertido: DJ sobre
+ * Osso, GLEIB vazado.
  */
-
-// Alturas das barras (% da faixa). Determinísticas (sem random) → mesmo render no
-// servidor e no cliente, sem mismatch de hidratação. Eventos: onda baixa e regular
-// (sobriedade). Balada: pulsos altos e desiguais (energia). brand-book §4.4/§4.5.
-const BARS = 96;
-const WAVE_EVENTOS = Array.from({ length: BARS }, (_, i) =>
-  Math.round(30 + 10 * Math.sin(i / 2.2)),
-);
-const WAVE_BALADA = Array.from({ length: BARS }, (_, i) =>
-  Math.round(44 + 42 * Math.abs(Math.sin(i * 1.6)) + 12 * Math.sin(i * 0.5)),
-);
-
-// O display (flex) fica na className por instância, NÃO no base: `balada:flex`
-// precisa poder ativar o flex sem que um `block`/`hidden` do base o sobrescreva.
-function Wavebars({ heights, className }: { heights: number[]; className?: string }) {
-  return (
-    <div
-      aria-hidden
-      className={cx("mx-auto h-8 max-w-content items-end gap-[2px] px-4", className)}
-    >
-      {heights.map((h, i) => (
-        <span key={i} className="flex-1 bg-accent" style={{ height: `${h}%` }} />
-      ))}
-    </div>
-  );
-}
+const WAVE: ReadonlyArray<{ h: number; on: boolean }> = [
+  ...[30, 34, 28, 36, 32, 30, 38, 34, 30, 36, 32, 34, 30].map((h) => ({ h, on: false })),
+  ...[44, 62, 28, 78, 100, 36, 68, 90, 26, 74, 48, 96, 32, 82, 40].map((h) => ({ h, on: true })),
+];
 
 export function Footer() {
   return (
-    <footer className="mt-auto">
-      {/* Assinatura: waveform bimodal, acompanha o modo da página (custom-variant
-          eventos/balada sobre o [data-mode] do <html>). Só uma versão aparece. */}
-      <div className="py-4">
-        <Wavebars heights={WAVE_EVENTOS} className="flex balada:hidden" />
-        <Wavebars heights={WAVE_BALADA} className="hidden balada:flex" />
-      </div>
+    <footer className="bg-pretotinta text-osso">
+      <div className="mx-auto max-w-content px-4 pb-12 pt-16 sm:px-8">
+        <div aria-hidden="true" className="mb-14 flex h-14 items-end gap-[3px]">
+          {WAVE.map((bar, i) => (
+            <div
+              key={i}
+              className={bar.on ? "flex-1 bg-lavanda" : "flex-1 bg-borda-escura"}
+              style={{ height: `${bar.h}%` }}
+            />
+          ))}
+        </div>
 
-      <div
-        data-mode="balada"
-        className="border-t-2 border-line bg-bg py-12 text-fg"
-      >
-        <div className="mx-auto flex max-w-content flex-col items-start justify-between gap-6 px-4 sm:flex-row sm:items-center">
-          <span className="font-display text-xl font-bold text-fg">
-            No comando do seu momento.
-          </span>
-
-          <div className="flex flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-6">
-            <a
-              href={INSTAGRAM_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-label font-semibold uppercase tracking-[0.16em] text-fg-2 transition-colors duration-200 ease-command hover:text-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+        <div className="flex flex-wrap items-end justify-between gap-10 border-t border-borda-escura pt-10">
+          <div className="flex flex-col gap-6">
+            <div
+              aria-label="DJ Gleib"
+              role="img"
+              className="flex w-max border-2 border-osso text-[19px] font-extrabold leading-none tracking-[-0.03em]"
             >
-              {INSTAGRAM_HANDLE}
-            </a>
-            <Button href={whatsappUrl()}>Falar no WhatsApp</Button>
+              <span className="border-r-2 border-osso bg-osso px-[9px] pb-2 pt-[7px] text-tinta">
+                DJ
+              </span>
+              <span className="px-[11px] pb-2 pt-[7px]">GLEIB</span>
+            </div>
+            <p className="m-0 text-[22px] font-bold tracking-[-0.02em]">{footer.signature}</p>
+          </div>
+
+          <div className="grid gap-2.5 text-[14px] text-lavanda sm:text-right">
+            <p className="m-0">{footer.identity}</p>
+            <p className="m-0">
+              <a href={whatsappUrl()} className="hover:text-osso">
+                WhatsApp
+              </a>
+              {" · "}
+              <a
+                href={INSTAGRAM_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-osso"
+              >
+                {INSTAGRAM_HANDLE}
+              </a>
+            </p>
           </div>
         </div>
       </div>

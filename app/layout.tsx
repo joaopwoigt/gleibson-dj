@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Poppins } from "next/font/google";
+import { ModeProvider } from "@/components/ModeProvider";
 import "./globals.css";
 
 // Fonte da marca (tokens.md §4). next/font/google baixa e self-hosta no build:
@@ -11,7 +12,8 @@ import "./globals.css";
 const poppins = Poppins({
   variable: "--font-poppins",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  // 300: a primeira linha do h1 ("Uns tocam música.") no design One Page.
+  weight: ["300", "400", "500", "600", "700", "800"],
   display: "swap",
 });
 
@@ -55,8 +57,15 @@ export default function RootLayout({
       data-mode="eventos"
       className={`${poppins.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-bg text-fg transition-colors duration-250 ease-command">
-        {children}
+      <body className="min-h-full bg-bg text-fg">
+        <ModeProvider>
+          {/* page-root: o que a Passagem clona. z-0 isola o contexto de
+              empilhamento, para o grão de papel (-z-10) ficar entre o fundo e o
+              conteúdo. A troca de cor é o corte da Passagem, não um fade. */}
+          <div id="page-root" className="relative z-0 flex min-h-screen flex-col bg-bg text-fg">
+            {children}
+          </div>
+        </ModeProvider>
       </body>
     </html>
   );

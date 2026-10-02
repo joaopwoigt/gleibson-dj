@@ -7,33 +7,18 @@
 import type { Mode } from "@/lib/mode";
 export type { Mode };
 
-/** A portfolio photo, tagged with the mode it belongs to (Eventos/Balada). */
-export type GalleryPhoto = {
-  src: string;
-  alt: string;
-  mode: Mode;
-};
-
-/** A portfolio video: standardized on YouTube (facade), Instagram link as fallback. */
-export type GalleryVideo = {
-  title: string;
-  mode: Mode;
-  youtubeId?: string;
-  instagramUrl?: string;
-};
-
-/** Social proof. `mode` optional: a testimonial can be cross-mode. */
-export type Testimonial = {
-  quote: string;
-  author: string;
-  role: string;
-  mode?: Mode;
-};
-
-/** The editorial block shown for the active mode (kicker + headline + body + bullets). */
-export type ModeContent = {
+/** The editorial block shown for the active mode (kicker, headline, 2 paragraphs, quote card). */
+export type ModeBlock = {
   kicker: string;
   headline: string;
-  body: string;
+  paragraphs: [string, string];
+  quote: string;
   bullets: string[];
+};
+
+/** One step of the "Como funciona" process. */
+export type Step = {
+  number: string;
+  title: string;
+  body: string;
 };

@@ -1,55 +1,27 @@
 "use client";
 
-import { useEffect, useRef, useState, type KeyboardEvent } from "react";
+import { useRef, type KeyboardEvent } from "react";
 import { cx } from "@/lib/cx";
-import { isMode, type Mode } from "@/lib/mode";
+import { useMode } from "@/components/ModeProvider";
+import type { Mode } from "@/lib/mode";
 
 /**
- * ModeTabs — the Eventos/Balada switcher, the brand's signature "dois modos, um
- * comando" (design-system/components.md §2). View Interativa (playbook §10):
- * holds the active mode in LOCAL interaction state; an effect reflects it onto
- * <html> and the CSS vars do the rest. No data state, no fetch.
+ * ModeTabs — o seletor Eventos/Balada, a assinatura "dois modos, um comando"
+ * (design-system/components.md §2). O estado vive no ModeProvider; aqui só
+ * chamamos switchMode (que dispara a Passagem) e cuidamos do teclado (APG).
  *
- * Handlers only call setMode. Everything with the outside world (the <html>
- * attribute and the URL) happens in the sync effect — the sanctioned place to
- * push React state into an external system.
+ * `short` aparece no mobile; `long` do breakpoint sm em diante. O nome acessível
+ * é o texto visível (a versão oculta por display:none não entra no nome).
  */
-// label = nome curto (rótulo visível no mobile). No desktop o prefixo "Modo " é
-// revelado por CSS (sm:inline). O nome acessível é fixado por aria-label na tab,
-// então não muda com o viewport. Fix Task 19: antes o texto longo quebrava em 2
-// linhas <640px (anotado na validação da Task 08).
-const TABS: ReadonlyArray<{ mode: Mode; label: string }> = [
-  { mode: "eventos", label: "Eventos" },
-  { mode: "balada", label: "Balada" },
+const TABS: ReadonlyArray<{ mode: Mode; short: string; long: string }> = [
+  { mode: "eventos", short: "Eventos", long: "Casamentos e eventos corporativos" },
+  { mode: "balada", short: "Festas", long: "Festas" },
 ];
 
-export function ModeTabs() {
-  const [mode, setMode] = useState<Mode>("eventos");
+export function ModeTabs({ className }: { className?: string }) {
+  const { mode, switchMode } = useMode();
   const tabRefs = useRef<Array<HTMLButtonElement | null>>([]);
 
-  // Deep-link: adopt ?modo=balada after mount. Starting from the server-rendered
-  // "eventos" and adopting the client-only query here (not in a lazy initializer)
-  // is what keeps hydration matching. This setState fires at most once.
-  useEffect(() => {
-    const param = new URLSearchParams(window.location.search).get("modo");
-    if (isMode(param) && param !== "eventos") {
-      // eslint-disable-next-line react-hooks/set-state-in-effect -- one-shot adoption of a client-only URL param on mount
-      setMode(param);
-    }
-  }, []);
-
-  // Reflect the active mode onto <html> (governs the whole page via CSS vars)
-  // and keep the URL shareable, without reloading. Runs after the deep-link
-  // effect on mount, so it never clobbers the incoming ?modo.
-  useEffect(() => {
-    document.documentElement.dataset.mode = mode;
-    const url = new URL(window.location.href);
-    if (mode === "eventos") url.searchParams.delete("modo");
-    else url.searchParams.set("modo", mode);
-    window.history.replaceState(null, "", url);
-  }, [mode]);
-
-  // Roving tabindex: arrows move selection + focus between the two tabs (APG).
   function onKeyDown(event: KeyboardEvent<HTMLDivElement>) {
     const current = TABS.findIndex((tab) => tab.mode === mode);
     let next = current;
@@ -57,7 +29,7 @@ export function ModeTabs() {
     else if (event.key === "ArrowLeft") next = (current - 1 + TABS.length) % TABS.length;
     else return;
     event.preventDefault();
-    setMode(TABS[next].mode);
+    switchMode(TABS[next].mode);
     tabRefs.current[next]?.focus();
   }
 
@@ -66,7 +38,7 @@ export function ModeTabs() {
       role="tablist"
       aria-label="Modo de atuação"
       onKeyDown={onKeyDown}
-      className="inline-flex border-2 border-line text-label font-semibold uppercase tracking-[0.16em]"
+      className={cx("flex border border-line", className)}
     >
       {TABS.map((tab, index) => {
         const active = tab.mode === mode;
@@ -79,20 +51,18 @@ export function ModeTabs() {
             type="button"
             role="tab"
             aria-selected={active}
-            aria-label={`Modo ${tab.label}`}
             tabIndex={active ? 0 : -1}
-            onClick={() => setMode(tab.mode)}
+            onClick={() => switchMode(tab.mode)}
             className={cx(
-              "whitespace-nowrap px-3 py-2.5 transition-colors duration-200 ease-command sm:px-5",
-              "focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent",
-              index > 0 && "border-l-2 border-line",
+              "flex-1 whitespace-nowrap px-4 py-3.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors duration-150 ease-command sm:flex-none sm:px-[18px]",
+              "focus-visible:outline-2 focus-visible:outline-offset-[-2px] focus-visible:outline-accent",
               active
-                ? "bg-accent text-on-accent"
-                : "bg-transparent text-fg-2 hover:text-fg",
+                ? "bg-accent text-on-accent shadow-glow"
+                : "bg-transparent text-fg-2 hover:opacity-85",
             )}
           >
-            <span aria-hidden className="hidden sm:inline">Modo&nbsp;</span>
-            {tab.label}
+            <span className="sm:hidden">{tab.short}</span>
+            <span className="hidden sm:inline">{tab.long}</span>
           </button>
         );
       })}

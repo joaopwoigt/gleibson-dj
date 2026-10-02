@@ -48,6 +48,7 @@ Kit de design **compilado a partir do brand book aprovado** (Etapa 3). É a base
 - **Kickers/labels** em Poppins 600 UPPERCASE, tracking 0.16em. brand-book §4.3.
 - **Tipografia:** Poppins e só. Peso e tracking fazem a hierarquia — nunca introduzir uma segunda família. brand-book §4.3.
 - **Logotipo bloco:** `DJ` + `GLEIB` dentro de um contorno único; o contorno é parte do logo. brand-book §4.4.
+- **Fundo Osso = grão, só no Modo Eventos.** Sempre que o fundo for `osso` no Modo Eventos, aplicar a textura de grão (tokens.md §7). O Balada não recebe. O grão nunca se desloca, só oscila em opacidade.
 
 ## Rastreabilidade
 

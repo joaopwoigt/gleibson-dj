@@ -32,14 +32,14 @@ test.describe("Smoke — site DJ Gleib", () => {
   test("dual-mode: default é Eventos e a aba troca para Balada", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("html")).toHaveAttribute("data-mode", "eventos");
-    await page.getByRole("tab", { name: "Modo Balada" }).click();
+    await page.getByRole("tab", { name: "Festas" }).click();
     await expect(page.locator("html")).toHaveAttribute("data-mode", "balada");
   });
 
   test("deep-link: /?modo=balada carrega direto em Balada", async ({ page }) => {
     await page.goto("/?modo=balada");
     await expect(page.locator("html")).toHaveAttribute("data-mode", "balada");
-    await expect(page.getByRole("tab", { name: "Modo Balada" })).toHaveAttribute(
+    await expect(page.getByRole("tab", { name: "Festas" })).toHaveAttribute(
       "aria-selected",
       "true",
     );
@@ -59,15 +59,17 @@ test.describe("Smoke — site DJ Gleib", () => {
     await page.goto("/");
     // Hero (comum aos dois modos) + CTA + assinatura do rodapé.
     await expect(page.getByRole("heading", { level: 1 })).toContainText("Eu comando o momento");
-    await expect(page.getByRole("heading", { name: /Você não contrata uma aposta/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Me conte a data/ })).toBeVisible();
     await expect(page.getByText("No comando do seu momento.")).toBeVisible();
     // Bloco Eventos visível por padrão; ao trocar, o headline do Balada aparece.
-    await expect(page.getByRole("heading", { name: /Eu administro seu dia/ })).toBeVisible();
-    await page.getByRole("tab", { name: "Modo Balada" }).click();
-    await expect(page.getByRole("heading", { name: /A euforia é da pista/ })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Você não precisa administrar nada/ })).toBeVisible();
+    await page.getByRole("tab", { name: "Festas" }).click();
+    await expect(page.getByRole("heading", { name: /A pista responde/ })).toBeVisible();
+    // A Passagem: o overlay do clone some sozinho depois do corte (250ms).
+    await expect(page.locator('body > div[aria-hidden="true"]')).toHaveCount(0);
   });
 
-  test("graceful-empty: galeria, vídeos e depoimentos ausentes com config vazio", async ({ page }) => {
+  test("seções removidas: galeria, vídeos e depoimentos não existem mais", async ({ page }) => {
     await page.goto("/");
     await expect(page.locator("#portfolio")).toHaveCount(0);
     await expect(page.locator("#videos")).toHaveCount(0);

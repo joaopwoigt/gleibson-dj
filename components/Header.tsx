@@ -1,50 +1,50 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/Button";
+import { Grain } from "@/components/Grain";
 import { ModeTabs } from "@/components/ModeTabs";
 import { whatsappUrl } from "@/lib/contact";
 
 /**
- * Header — sticky top bar: logotipo bloco + Mode Tabs + WhatsApp CTA. View component.
+ * Header — barra sticky: logotipo bloco + Mode Tabs + WhatsApp. No mobile quebra
+ * em duas linhas (logo + WhatsApp, depois as abas em largura total).
  *
- * Brand book v2 (2026-08-18): o wordmark "GLEIB" (GLE cheio + IB vazado) foi
- * SUBSTITUIDO pelo logotipo bloco — duas celulas dentro de um contorno unico:
- * `DJ` sobre o bloco de cor-accent + `GLEIB` sobre o fundo. Poppins 800,
- * tracking -0.03em. O contorno e PARTE do logo, nao moldura — nunca remover.
+ * Brand book v2: logotipo bloco = duas células dentro de um contorno único,
+ * `DJ` sobre o bloco de accent + `GLEIB` sobre o fundo. Poppins 800, tracking
+ * -0.03em. O contorno é PARTE do logo — nunca remover. Recriado em HTML (não SVG)
+ * para trocar de cor por modo pelos tokens e não depender de fonte externa.
  *
- * Continua recriado em HTML (nao SVG) com a Poppins self-hosted e os tokens
- * semanticos, entao troca de cor por modo de graca: o bloco pega var(--ds-accent)
- * e o texto pega var(--ds-on-accent)/fg. O SVG embute @import ao Google Fonts,
- * o que quebraria o self-host da Task 03 e criaria divida de CSP na Task 21.
- * Fonte: design-system/components.md §7 + brand-book §4.4.
+ * Tem fundo opaco, então carrega a própria camada de grão (z 95 > grão da página).
  */
 export function Header() {
   return (
-    <header className="sticky top-0 z-50 border-b-2 border-line bg-bg/95 backdrop-blur transition-colors duration-250 ease-command">
-      <div className="mx-auto flex h-16 max-w-content items-center justify-between gap-4 px-4">
+    <header className="sticky top-0 z-[95] border-b border-line bg-bg">
+      <Grain layer="header" />
+      <div className="relative z-10 mx-auto flex max-w-content flex-wrap items-center gap-x-8 gap-y-3 px-4 py-3.5 sm:px-8">
         <Link
-          href="/"
+          href="#top"
           aria-label="DJ Gleib — início"
-          className="shrink-0 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+          className="flex border-2 border-fg text-[19px] font-extrabold leading-none tracking-[-0.03em] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
         >
           <span
             aria-hidden
-            className="inline-flex border-[1.5px] border-fg text-xl font-extrabold leading-none tracking-[-0.03em]"
+            className="border-r-2 border-fg bg-accent px-[9px] pb-2 pt-[7px] text-on-accent"
           >
-            <span className="flex items-center border-r-[1.5px] border-fg bg-accent px-[0.44em] py-[0.36em] text-on-accent">
-              DJ
-            </span>
-            <span className="flex items-center px-[0.44em] py-[0.36em] text-fg">GLEIB</span>
+            DJ
+          </span>
+          {/* Espaço invisível no flex: o texto lido vira "DJ GLEIB", contido no
+              aria-label (WCAG 2.5.3, label-in-name). */}{" "}
+          <span aria-hidden className="px-[11px] pb-2 pt-[7px] text-fg">
+            GLEIB
           </span>
         </Link>
 
-        <div className="flex items-center gap-4">
-          <ModeTabs />
-          {/* WhatsApp oculto no mobile (<640) — layouts.md; wrapper evita conflito
-              de display com o inline-flex do Button. */}
-          <div className="hidden sm:block">
-            <Button href={whatsappUrl()}>WhatsApp</Button>
-          </div>
-        </div>
+        <ModeTabs className="order-3 w-full md:order-none md:ml-auto md:w-auto" />
+
+        <a
+          href={whatsappUrl()}
+          className="ml-auto whitespace-nowrap bg-accent px-5 py-[13px] text-[12px] font-semibold uppercase tracking-[0.16em] text-on-accent shadow-glow md:ml-0"
+        >
+          WhatsApp
+        </a>
       </div>
     </header>
   );

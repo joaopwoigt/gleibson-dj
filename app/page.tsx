@@ -1,27 +1,29 @@
-// Shell da página: Header · main · Footer. O <main> monta as seções na ordem de
-// venda (layouts.md): Hero primeiro; MODO, galeria, prova social e CTA entram
-// nas próximas tasks. O Header hospeda as ModeTabs, que governam o data-mode.
+// Shell da página (design "DJ Gleib One Page"): Header · Hero · faixa de onda ·
+// bloco do modo · Como funciona · Disponibilidade · Footer. O ModeProvider (no
+// layout) governa o modo; o grão do Modo Eventos fica no nível da página.
 
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
+import { Grain } from "@/components/Grain";
+import { WaveStrip } from "@/components/WaveStrip";
 import { Hero } from "@/components/sections/Hero";
-import { ModeContent } from "@/components/sections/ModeContent";
-import { Gallery } from "@/components/sections/Gallery";
-import { VideoGallery } from "@/components/sections/VideoGallery";
-import { Testimonials } from "@/components/sections/Testimonials";
+import { ModeBlock } from "@/components/sections/ModeBlock";
+import { Process } from "@/components/sections/Process";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export default function Home() {
   return (
     <>
+      <Grain layer="paper" />
+      <Grain layer="surface" />
+
       <Header />
 
-      <main className="mx-auto w-full max-w-content flex-1 px-4">
+      <main className="flex-1">
         <Hero />
-        <ModeContent />
-        <Gallery />
-        <VideoGallery />
-        <Testimonials />
+        <WaveStrip />
+        <ModeBlock />
+        <Process />
         <FinalCTA />
       </main>
 

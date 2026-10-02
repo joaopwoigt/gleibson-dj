@@ -18,11 +18,13 @@
   --ds-bg:#F1EEE8; --ds-surface:#F7F4EE; --ds-fg:#16131C; --ds-fg-2:#45424C;
   --ds-accent:#6D28D9; --ds-accent-emphasis:#6D28D9; --ds-on-accent:#FFFFFF;
   --ds-border:#DAD4CA; --ds-glow:none;
+  --ds-photo:grayscale(1) contrast(1.18) brightness(1.02);
 }
 [data-mode="balada"] {
   --ds-bg:#100E14; --ds-surface:#211B2E; --ds-fg:#F1EEE8; --ds-fg-2:#948BA6;
   --ds-accent:#9B5CFF; --ds-accent-emphasis:#B98CFF; --ds-on-accent:#100E14;
   --ds-border:#2A2536; --ds-glow:0 0 24px rgba(155,92,255,.45);
+  --ds-photo:grayscale(1) contrast(1.36) brightness(0.94);
 }
 
 /* Semanticas: `inline` faz a utility referenciar --ds-* direto, entao ela
@@ -92,8 +94,9 @@
   --radius-xs:0px; --radius-sm:0px; --radius-md:0px; --radius-lg:0px;
   --radius-xl:0px; --radius-2xl:0px; --radius-3xl:0px;
 
-  /* --- Largura maxima de conteudo (tokens.md 5) -> max-w-content --- */
-  --container-content:1120px;
+  /* --- Largura maxima de conteudo (tokens.md 5) -> max-w-content. 1240px desde o
+     design One Page (antes 1120px). --- */
+  --container-content:1240px;
 
   /* --- Movimento (tokens.md 6): "comando" = ease-in-out, nome semantico --- */
   --ease-command: cubic-bezier(0.4, 0, 0.2, 1);
@@ -113,8 +116,30 @@ body {
    ancoradas (#portfolio, #videos, #contato do Hero/CTA). O destino para 80px
    abaixo do topo, com folga sobre o header. */
 html {
-  scroll-padding-top: 5rem;
+  scroll-padding-top: 8rem;
 }
+@media (min-width: 768px) {
+  html { scroll-padding-top: 5rem; }
+}
+
+/* ===========================================================================
+   Movimento do design One Page (tokens.md §6 e §7)
+=========================================================================== */
+
+/* O grao (so Modo Eventos, componente Grain). Nunca se desloca: so a opacidade
+   oscila, em ciclos longos e diferentes para as camadas nao pulsarem juntas. */
+@keyframes grain-paper { 0%, 100% { opacity: .12; } 50% { opacity: .16; } }
+@keyframes grain-surface { 0%, 100% { opacity: .42; } 50% { opacity: .32; } }
+.grain-paper { animation: grain-paper 26s ease-in-out infinite; }
+.grain-surface { animation: grain-surface 34s ease-in-out infinite; }
+@media (max-width: 767px) {
+  /* Tela pequena: a camada de cima pesa mais sobre menos area. */
+  @keyframes grain-surface { 0%, 100% { opacity: .30; } 50% { opacity: .24; } }
+}
+
+/* Quadro da foto do hero: revela da esquerda para a direita ao carregar. */
+@keyframes frame-in { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+.hero-frame { animation: frame-in 250ms cubic-bezier(0.4, 0, 0.2, 1) both; }
 
 /* Acessibilidade (Task 19): respeita prefers-reduced-motion. Zera transicoes e
    animacoes — inclusive a troca de cor Eventos<->Balada e o scale do play badge —
@@ -129,4 +154,8 @@ html {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+  /* Grao estatico na opacidade media do ciclo; quadro do hero ja visivel. */
+  .grain-paper { animation-name: none !important; opacity: .14; }
+  .grain-surface { animation-name: none !important; opacity: .37; }
+  .hero-frame { animation-name: none !important; }
 }

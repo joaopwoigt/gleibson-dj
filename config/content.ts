@@ -1,54 +1,94 @@
-import type {
-  GalleryPhoto,
-  GalleryVideo,
-  Mode,
-  ModeContent,
-  Testimonial,
-} from "@/config/types";
+import type { Mode, ModeBlock, Step } from "@/config/types";
 
 /**
- * Fonte única do conteúdo editorial do site.
+ * Fonte única do conteúdo editorial do site (design "DJ Gleib One Page",
+ * exportado do Claude Design em 2026-10).
  *
- * Perfil B: NÃO há runtime store (Edge Config). O conteúdo é estático no repo,
- * editado + redeploy (decisão do PLAN #7) — sem config/runtime.ts.
+ * Perfil B: NÃO há runtime store. O conteúdo é estático no repo, editado +
+ * redeploy (decisão do PLAN #7).
  *
- * Textos por modo = copy da marca aprovada (branding/03-identidade/messaging.md).
- *
- * SEGUNDA LEVA / GRACEFUL-EMPTY: `gallery`, `videos` e `testimonials` nascem
- * VAZIOS — hoje não existe material de eventos reais nem depoimentos capturados.
- * O gate de conteúdo (Fase 6) os popula. As seções que os consomem se ESCONDEM
- * quando a lista está vazia, então o site publica coerente mesmo sem esse
- * material. Popular é drop-in: basta preencher os arrays aqui.
+ * Galeria, vídeos e depoimentos foram REMOVIDOS por decisão do João Pedro
+ * (2026-10-02): o design novo não tem essas seções e elas não voltam.
  */
 
-export const modeContent: Record<Mode, ModeContent> = {
-  // messaging.md: headline = frase 3; body = mensagem "Casal de noivos";
-  // bullets derivados das mensagens por audiência (casal / cerimonialista / RH).
+export const hero = {
+  lead: "Uns tocam música.",
+  emphasis: "Eu comando o momento.",
+  subtitle: {
+    eventos:
+      "De dia, eu sumo para você viver o seu dia. De noite, eu apareço para levantar a sua noite. Nos dois, nada fica no acaso.",
+    balada: "Formado em festas universitárias, diretamente do palco do Inter.",
+  } satisfies Record<Mode, string>,
+  cta: "Falar no WhatsApp",
+};
+
+export const modeBlocks: Record<Mode, ModeBlock> = {
   eventos: {
-    kicker: "Casamentos & corporativo",
-    headline: "Eu administro seu dia para que você possa vivê-lo.",
-    body: "Sobriedade, roteiro, nenhuma surpresa: você só vive o seu dia.",
+    kicker: "Modo Eventos",
+    headline: "Você não precisa administrar nada.",
+    paragraphs: [
+      "Roteiro fechado com antecedência, cada momento no lugar certo: entrada, cerimônia, brinde, primeira dança, abertura de pista. Nada acontece antes da hora e nada fica esperando.",
+      "No dia, eu sumo. Converso com cerimonial, fotógrafo e buffet, resolvo o que aparece e mantenho o volume no ponto em que a conversa continua possível.",
+    ],
+    quote: "“Eu administro seu dia para que você possa vivê-lo.”",
     bullets: [
-      "Set e roteiro decididos com você antes do dia.",
-      "Nenhuma surpresa. Esse é o combinado.",
-      "Condução, pontualidade e presença comprovadas.",
+      "Reunião de roteiro e alinhamento com o cerimonial",
+      "Repertório definido a quatro mãos, com lista de vetos",
     ],
   },
-  // messaging.md: headline = frase 4; body = mensagem "Casa noturna";
-  // bullets = frases 7 e 5 (literais) + linha da casa noturna.
   balada: {
-    kicker: "Balada & festas",
-    headline: "A euforia é da pista. O comando é meu.",
-    body: "Energia com aresta, fora do circuito óbvio, que sobe e não cai.",
+    kicker: "Modo Balada",
+    headline: "A pista responde. Eu decido o que vem depois.",
+    paragraphs: [
+      "Leitura de pista em tempo real: quem chegou, quem está cansando, o que ainda não foi tocado. A noite tem curva, e a curva é construída, não improvisada.",
+      "Presença quando a pista precisa de direção, silêncio quando ela já está no lugar. Transição sem buraco, do primeiro set ao último.",
+    ],
+    quote: "“A euforia é da pista. O comando é meu.”",
     bullets: [
-      "Energia sem comando é bagunça.",
-      "Muda o volume, nunca o caráter.",
-      "Um set que traz e sustenta o público.",
+      "Set desenhado para a duração real da festa",
+      "Leitura de pista e virada de energia sem queda",
+      "Estrutura de som e luz sob controle do começo ao fim",
+      "Aniversários, formaturas, festas privadas e casas",
     ],
   },
 };
 
-// Vazios por enquanto — populados na segunda leva (Fase 6). Ver nota acima.
-export const gallery: GalleryPhoto[] = [];
-export const videos: GalleryVideo[] = [];
-export const testimonials: Testimonial[] = [];
+export const process = {
+  title: "Como funciona",
+  kicker: "Quatro etapas, sem surpresa",
+  steps: [
+    {
+      number: "01",
+      title: "Conversa",
+      body: "Data, local, duração e o tipo de evento. Em uma conversa dá para saber se faz sentido.",
+    },
+    {
+      number: "02",
+      title: "Roteiro",
+      body: "Momentos mapeados na linha do tempo, repertório e vetos definidos por escrito.",
+    },
+    {
+      number: "03",
+      title: "Montagem",
+      body: "Chegada com folga, teste de som e alinhamento com quem estiver conduzindo o dia.",
+    },
+    {
+      number: "04",
+      title: "Comando",
+      body: "Do primeiro convidado ao último. Você vive o momento, eu cuido do resto.",
+    },
+  ] satisfies Step[],
+};
+
+export const availability = {
+  kicker: "Disponibilidade",
+  headline: ["Me conte a data.", "Eu digo se o dia é seu."] as const,
+  whatsappLabel: "WhatsApp direto",
+  whatsappHint: "Resposta no dia",
+  instagramHint: "Instagram",
+};
+
+export const footer = {
+  signature: "No comando do seu momento.",
+  identity: "Gleibson Santos · Araraquara/SP e região",
+};

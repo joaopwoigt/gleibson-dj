@@ -1,58 +1,59 @@
+"use client";
+
 import Image from "next/image";
-import { Button } from "@/components/ui/Button";
-import { Kicker } from "@/components/ui/Kicker";
-import { gallery } from "@/config/content";
+import { GradeComando } from "@/components/GradeComando";
+import { useMode } from "@/components/ModeProvider";
+import { hero } from "@/config/content";
 import { whatsappUrl } from "@/lib/contact";
 
 /**
- * Hero — a abertura da página. Comum aos dois modos: a headline é a assinatura
- * da marca (frase 1 do messaging), e cor/glow trocam por token. View component.
- *
- * Copy 100% da marca aprovada (messaging.md): headline = "Uns tocam música. Eu
- * comando o momento."; subtítulo = conceito ("dois tempos"). O kicker é rótulo
- * factual de categoria, não copy inventada. Foto do ensaio em P&B via CSS
- * (regra de imagery da marca — a cor vive no accent, nunca na foto).
+ * Hero — a abertura da página. A headline é a assinatura da marca e é comum aos
+ * dois modos; o subtítulo troca por modo. No Balada, a Grade de Comando corre
+ * atrás do texto. Foto em P&B (a cor vive no accent), com contraste por modo
+ * via --ds-photo. O quadro entra com um clip-path de 250ms (frameIn).
  */
 export function Hero() {
+  const { mode } = useMode();
+
   return (
-    <section className="grid gap-10 py-16 lg:grid-cols-2 lg:items-center lg:gap-16 lg:py-24">
-      <div className="flex flex-col items-start">
-        <Kicker>DJ de eventos e balada</Kicker>
+    <section
+      id="top"
+      className="relative mx-auto w-full max-w-content overflow-hidden px-4 pb-14 pt-16 sm:px-8 md:pb-[72px] md:pt-24"
+    >
+      {mode === "balada" && <GradeComando />}
 
-        <h1 className="mt-4 font-display text-display font-extrabold text-fg">
-          Uns tocam música.{" "}
-          <span className="text-accent">Eu comando o momento.</span>
-        </h1>
+      <div className="relative grid items-stretch gap-10 md:grid-cols-[minmax(0,1fr)_400px]">
+        <div className="self-center">
+          <h1 className="m-0 text-[clamp(40px,5.2vw,74px)] font-light leading-none tracking-[-0.03em]">
+            <span className="inline-block text-[0.785em] tracking-[-0.045em]">{hero.lead}</span>
+            <br />
+            <span className="font-extrabold text-accent">{hero.emphasis}</span>
+          </h1>
 
-        <p className="mt-5 max-w-[46ch] font-body text-body text-fg-2">
-          Todo momento perfeito tem dois tempos: um de calma, um de fogo. A arte
-          é comandar os dois.
-        </p>
+          <p className="mt-9 max-w-[620px] text-[19px] leading-[1.6] text-fg-2">
+            {hero.subtitle[mode]}
+          </p>
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Button href={whatsappUrl()}>Falar no WhatsApp</Button>
-          {/* Só renderiza quando há portfólio real: a âncora #portfolio só existe
-              se a galeria tiver fotos (graceful-empty). Evita CTA morto no estado
-              vazio atual; reaparece sozinho quando a galeria for populada (Fase 6). */}
-          {gallery.length > 0 && (
-            <Button variant="secondary" href="#portfolio">
-              Ver o portfólio
-            </Button>
-          )}
+          <div className="mt-11 flex flex-wrap gap-3.5">
+            <a
+              href={whatsappUrl()}
+              className="relative z-[91] bg-accent px-[30px] py-[19px] text-[13px] font-semibold uppercase tracking-[0.16em] text-on-accent shadow-glow"
+            >
+              {hero.cta}
+            </a>
+          </div>
         </div>
-      </div>
 
-      {/* Foto do ensaio (só hero/estrutura — não vai para a galeria). Glow só no
-          Balada (shadow-glow = none no Eventos). */}
-      <div className="relative aspect-[2/3] w-full max-w-md overflow-hidden border border-line shadow-glow lg:justify-self-end">
-        <Image
-          src="/hero-gleib.webp"
-          alt="Retrato do DJ Gleib"
-          width={1200}
-          height={1800}
-          priority
-          className="h-full w-full object-cover grayscale contrast-[1.08]"
-        />
+        <div className="hero-frame relative z-[91] h-80 overflow-hidden border-2 border-fg bg-surface md:h-auto md:min-h-[640px]">
+          <Image
+            src="/hero-gleib.webp"
+            alt="Retrato do DJ Gleib"
+            fill
+            priority
+            sizes="(min-width: 768px) 400px, 100vw"
+            className="object-cover object-[50%_22%] [filter:var(--ds-photo)]"
+          />
+        </div>
       </div>
     </section>
   );

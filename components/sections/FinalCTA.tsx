@@ -1,40 +1,43 @@
+import { availability } from "@/config/content";
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL, whatsappUrl } from "@/lib/contact";
 
 /**
- * FinalCTA — bloco de conversão de fechamento. A página "respira o accent" aqui
- * (bloco no accent do modo, brand-book §4.7 "um accent por vez"). Headline =
- * provocação de venda da marca (messaging frase 9). Botão WhatsApp inverso
- * (contrasta com o fundo accent) + link Instagram. View pura.
+ * FinalCTA — "Disponibilidade": a faixa de conversão em largura total, no accent
+ * do modo (brand-book §4.7 "um accent por vez"). Dois caminhos: WhatsApp direto
+ * e Instagram, como botões de contorno.
+ *
+ * Desvio consciente do design: os rótulos secundários vão em on-accent CHEIO, sem
+ * a opacidade .72 do export. Texto de 12px a 72% fica ~4,4:1 no Eventos e reprova
+ * no AA (mesmo problema que o Lighthouse pegou na Task 23 com /80). A hierarquia
+ * fica no peso e no tamanho.
  */
+const LINK_CLASS =
+  "relative z-[91] flex items-center justify-between gap-6 border-2 border-current px-[26px] py-[22px] text-[15px] font-semibold transition-opacity duration-150 ease-command hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-accent";
+const HINT_CLASS = "text-[12px] font-medium uppercase tracking-[0.16em]";
+
 export function FinalCTA() {
   return (
-    <section id="contato" className="border-t border-line py-16 lg:py-24">
-      <div className="bg-accent px-6 py-12 text-on-accent shadow-glow lg:px-14 lg:py-16">
-        {/* on-accent em cheio (sem /80): a 80% o texto escuro do Balada clareia
-            para 3.9:1 sobre a púrpura elétrica e reprova no AA (Lighthouse Task 23).
-            Full passa nos dois modos (7.1 Eventos / 4.9 Balada). */}
-        <span className="text-label font-semibold uppercase tracking-[0.16em] text-on-accent">
-          Vamos conversar
-        </span>
-        <h2 className="mt-4 max-w-[18ch] font-display text-h1 font-bold text-on-accent">
-          Você não contrata uma aposta. Você contrata quem comanda.
-        </h2>
-        <div className="mt-8 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-          {/* Botão inverso: bg = on-accent, texto = accent, para contrastar com
-              o fundo accent do bloco. */}
-          <a
-            href={whatsappUrl()}
-            className="inline-flex items-center gap-2 border-2 border-on-accent bg-on-accent px-6 py-3 font-body font-bold text-accent transition-opacity duration-200 ease-command hover:opacity-90 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-accent"
-          >
-            Falar no WhatsApp
+    <section id="contato" className="bg-accent text-on-accent">
+      <div className="mx-auto grid max-w-content items-end gap-12 px-4 py-16 sm:px-8 md:grid-cols-[1.2fr_1fr] md:gap-16 md:py-[88px]">
+        <div>
+          <p className="mb-6 text-[12px] font-semibold uppercase tracking-[0.16em]">
+            {availability.kicker}
+          </p>
+          <h2 className="m-0 text-[clamp(34px,5vw,66px)] font-extrabold leading-[1.02] tracking-[-0.03em]">
+            {availability.headline[0]}
+            <br />
+            {availability.headline[1]}
+          </h2>
+        </div>
+
+        <div className="grid gap-3.5">
+          <a href={whatsappUrl()} className={LINK_CLASS}>
+            <span>{availability.whatsappLabel}</span>
+            <span className={HINT_CLASS}>{availability.whatsappHint}</span>
           </a>
-          <a
-            href={INSTAGRAM_URL}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="border-b-2 border-transparent text-label font-semibold uppercase tracking-[0.16em] text-on-accent transition-colors duration-200 ease-command hover:border-on-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-on-accent"
-          >
-            {INSTAGRAM_HANDLE}
+          <a href={INSTAGRAM_URL} target="_blank" rel="noopener noreferrer" className={LINK_CLASS}>
+            <span>{INSTAGRAM_HANDLE}</span>
+            <span className={HINT_CLASS}>{availability.instagramHint}</span>
           </a>
         </div>
       </div>
