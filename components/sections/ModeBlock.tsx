@@ -9,17 +9,19 @@ import { modeBlocks } from "@/config/content";
  * vem do estado React (useMode), não de variants CSS, para a Passagem clonar o
  * modo certo. No Balada o card ganha glow e a citação vai para o accent claro.
  */
-export function ModeBlock() {
+export function ModeBlock({ divider = false }: { divider?: boolean }) {
   const { mode } = useMode();
   const block = modeBlocks[mode];
 
   return (
-    <section className="mx-auto w-full max-w-content px-4 py-16 sm:px-8 md:py-[88px]">
-      <div className="grid items-start gap-12 md:grid-cols-2 md:gap-[72px]">
+    <section className={cx(divider && "border-t border-line")}>
+      <div className="mx-auto grid w-full max-w-content px-4 py-16 sm:px-8 md:py-[88px] items-start gap-12 md:grid-cols-2 md:gap-[72px]">
         <div>
-          <p className="mb-6 text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">
-            {block.kicker}
-          </p>
+          {block.kicker && (
+            <p className="mb-6 text-[12px] font-semibold uppercase tracking-[0.16em] text-accent">
+              {block.kicker}
+            </p>
+          )}
           <h2 className="m-0 text-[clamp(32px,4vw,52px)] font-bold leading-[1.06] tracking-[-0.02em]">
             {block.headline}
           </h2>

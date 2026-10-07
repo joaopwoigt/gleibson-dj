@@ -9,7 +9,7 @@ export type { Mode };
 
 /** The editorial block shown for the active mode (kicker, headline, 0+ paragraphs, quote card). */
 export type ModeBlock = {
-  kicker: string;
+  kicker?: string;
   headline: string;
   paragraphs: string[];
   quote: string;

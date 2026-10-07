@@ -51,7 +51,6 @@ export const modeBlocks: Record<Mode, ModeBlock> = {
     ],
   },
   balada: {
-    kicker: "Modo Balada",
     headline: "A pista responde. Eu decido o que vem depois.",
     paragraphs: [],
     quote: "“A euforia é da pista. O comando é meu.”",
@@ -91,13 +90,12 @@ export const process = {
   ] satisfies Step[],
 };
 
-/** "Como funciona" fica só no Eventos; no Balada a mesma posição recebe a bio. */
+/** "Como funciona" fica só no Eventos; no Balada a bio entra antes do bloco do modo. */
 export const bio = {
   title: "DJ Gleib",
-  kicker: "Inter UNESP 2024 · +10 mil pessoas",
   paragraphs: [
     "Com uma trajetória diversificada na música, DJ Gleib Santos já atuou como organizador de eventos, músico freelancer de estúdio e até tocou sertanejo em barzinhos. Mas foi no funk que encontrou sua verdadeira identidade.",
-    "Há dois anos, o Baile do Capitão vem conquistando espaço nos principais eventos universitários do interior de São Paulo, passando por cidades como Araraquara, Ribeirão Preto, Itápolis, São Carlos e Campinas.",
+    "Desde 2023, o Baile do Capitão vem conquistando espaço nos principais eventos universitários do interior de São Paulo, passando por cidades como Araraquara, Ribeirão Preto, Itápolis, São Carlos e Campinas. No Inter UNESP 2024, levou o baile para mais de 10 mil pessoas.",
     "Com sua máscara iluminada icônica, DJ Gleib transforma cada apresentação em uma experiência eletrizante. Além dos palcos, ele inicia agora sua jornada na composição e produção musical, expandindo ainda mais seu impacto na cena.",
   ],
 };

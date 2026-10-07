@@ -7,8 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Grain } from "@/components/Grain";
 import { WaveStrip } from "@/components/WaveStrip";
 import { Hero } from "@/components/sections/Hero";
-import { ModeBlock } from "@/components/sections/ModeBlock";
-import { Process } from "@/components/sections/Process";
+import { ModeSections } from "@/components/sections/ModeSections";
 import { FinalCTA } from "@/components/sections/FinalCTA";
 
 export default function Home() {
@@ -22,8 +21,7 @@ export default function Home() {
       <main className="flex-1">
         <Hero />
         <WaveStrip />
-        <ModeBlock />
-        <Process />
+        <ModeSections />
         <FinalCTA />
       </main>
 

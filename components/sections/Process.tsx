@@ -1,6 +1,7 @@
 "use client";
 
 import { useMode } from "@/components/ModeProvider";
+import { cx } from "@/lib/cx";
 import { bio, process } from "@/config/content";
 
 // Bordas internas por posição: 1 coluna (mobile) → 2 (sm) → 4 (lg). Células sem
@@ -13,27 +14,29 @@ const CELL_BORDERS = [
 ];
 
 /**
- * A seção depois do bloco do modo. No Eventos, "Como funciona" com as quatro
- * etapas; no Balada, a bio do Gleib (revisão 2026-10-05: o roteiro em etapas não
- * é como uma festa funciona na prática). Conteúdo via useMode, como o ModeBlock,
- * para a Passagem clonar o modo certo.
+ * No Eventos, "Como funciona" com as quatro etapas, depois do bloco do modo; no
+ * Balada, a bio do Gleib, antes do bloco do modo (revisão 2026-10-05: o roteiro em
+ * etapas não é como uma festa funciona na prática). A ordem fica em ModeSections.
+ * Conteúdo via useMode, como o ModeBlock, para a Passagem clonar o modo certo.
  */
-export function Process() {
+export function Process({ divider = false }: { divider?: boolean }) {
   const { mode } = useMode();
   const isBio = mode === "balada";
   const title = isBio ? bio.title : process.title;
-  const kicker = isBio ? bio.kicker : process.kicker;
+  const kicker = isBio ? null : process.kicker;
 
   return (
-    <section className="border-t border-line">
+    <section className={cx(divider && "border-t border-line")}>
       <div className="mx-auto max-w-content px-4 py-16 sm:px-8 md:py-[88px]">
         <div className="mb-12 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
           <h2 className="m-0 text-[clamp(28px,3.4vw,44px)] font-bold tracking-[-0.02em]">
             {title}
           </h2>
-          <p className="m-0 text-[12px] font-semibold uppercase tracking-[0.16em] text-fg-2">
-            {kicker}
-          </p>
+          {kicker && (
+            <p className="m-0 text-[12px] font-semibold uppercase tracking-[0.16em] text-fg-2">
+              {kicker}
+            </p>
+          )}
         </div>
 
         {isBio ? (
