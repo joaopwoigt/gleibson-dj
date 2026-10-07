@@ -65,6 +65,10 @@ test.describe("Smoke — site DJ Gleib", () => {
     await expect(page.getByRole("heading", { name: /Você não precisa administrar nada/ })).toBeVisible();
     await page.getByRole("tab", { name: "Festas" }).click();
     await expect(page.getByRole("heading", { name: /A pista responde/ })).toBeVisible();
+    // Revisão 2026-10-05: no Balada, a bio substitui "Como funciona" e o CTA troca.
+    await expect(page.getByRole("heading", { name: "DJ Gleib", exact: true })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "Como funciona" })).toHaveCount(0);
+    await expect(page.getByRole("heading", { name: /Traga o DJ Gleib/ })).toBeVisible();
     // A Passagem: o overlay do clone some sozinho depois do corte (250ms).
     await expect(page.locator('body > div[aria-hidden="true"]')).toHaveCount(0);
   });

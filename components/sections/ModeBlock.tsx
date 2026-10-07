@@ -23,8 +23,14 @@ export function ModeBlock() {
           <h2 className="m-0 text-[clamp(32px,4vw,52px)] font-bold leading-[1.06] tracking-[-0.02em]">
             {block.headline}
           </h2>
-          <p className="mt-7 text-[18px] leading-[1.6] text-fg-2">{block.paragraphs[0]}</p>
-          <p className="mt-5 text-[18px] leading-[1.6] text-fg-2">{block.paragraphs[1]}</p>
+          {block.paragraphs.map((text, index) => (
+            <p
+              key={index}
+              className={cx("text-[18px] leading-[1.6] text-fg-2", index === 0 ? "mt-7" : "mt-5")}
+            >
+              {text}
+            </p>
+          ))}
         </div>
 
         <div className="border-2 border-fg bg-surface p-7 shadow-glow sm:p-11">

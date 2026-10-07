@@ -1,4 +1,7 @@
-import { process } from "@/config/content";
+"use client";
+
+import { useMode } from "@/components/ModeProvider";
+import { bio, process } from "@/config/content";
 
 // Bordas internas por posição: 1 coluna (mobile) → 2 (sm) → 4 (lg). Células sem
 // fundo próprio, para o grão do papel continuar aparecendo no Modo Eventos.
@@ -9,34 +12,54 @@ const CELL_BORDERS = [
   "",
 ];
 
-/** "Como funciona": as quatro etapas, iguais nos dois modos. View component. */
+/**
+ * A seção depois do bloco do modo. No Eventos, "Como funciona" com as quatro
+ * etapas; no Balada, a bio do Gleib (revisão 2026-10-05: o roteiro em etapas não
+ * é como uma festa funciona na prática). Conteúdo via useMode, como o ModeBlock,
+ * para a Passagem clonar o modo certo.
+ */
 export function Process() {
+  const { mode } = useMode();
+  const isBio = mode === "balada";
+  const title = isBio ? bio.title : process.title;
+  const kicker = isBio ? bio.kicker : process.kicker;
+
   return (
     <section className="border-t border-line">
       <div className="mx-auto max-w-content px-4 py-16 sm:px-8 md:py-[88px]">
         <div className="mb-12 flex flex-wrap items-baseline justify-between gap-x-8 gap-y-3">
           <h2 className="m-0 text-[clamp(28px,3.4vw,44px)] font-bold tracking-[-0.02em]">
-            {process.title}
+            {title}
           </h2>
           <p className="m-0 text-[12px] font-semibold uppercase tracking-[0.16em] text-fg-2">
-            {process.kicker}
+            {kicker}
           </p>
         </div>
 
-        <ol className="m-0 grid list-none border border-line p-0 sm:grid-cols-2 lg:grid-cols-4">
-          {process.steps.map((step, index) => (
-            <li key={step.number} className={`border-line px-8 py-10 ${CELL_BORDERS[index]}`}>
-              <p
-                aria-hidden="true"
-                className="mb-6 text-[40px] font-extrabold tracking-[-0.03em] text-accent"
-              >
-                {step.number}
+        {isBio ? (
+          <div className="grid gap-6 border border-line px-8 py-10 md:grid-cols-3 md:gap-10">
+            {bio.paragraphs.map((text, index) => (
+              <p key={index} className="m-0 text-[17px] leading-[1.6] text-fg-2">
+                {text}
               </p>
-              <h3 className="mb-3.5 text-[20px] font-semibold tracking-[-0.015em]">{step.title}</h3>
-              <p className="m-0 text-[15px] leading-[1.6] text-fg-2">{step.body}</p>
-            </li>
-          ))}
-        </ol>
+            ))}
+          </div>
+        ) : (
+          <ol className="m-0 grid list-none border border-line p-0 sm:grid-cols-2 lg:grid-cols-4">
+            {process.steps.map((step, index) => (
+              <li key={step.number} className={`border-line px-8 py-10 ${CELL_BORDERS[index]}`}>
+                <p
+                  aria-hidden="true"
+                  className="mb-6 text-[40px] font-extrabold tracking-[-0.03em] text-accent"
+                >
+                  {step.number}
+                </p>
+                <h3 className="mb-3.5 text-[20px] font-semibold tracking-[-0.015em]">{step.title}</h3>
+                <p className="m-0 text-[15px] leading-[1.6] text-fg-2">{step.body}</p>
+              </li>
+            ))}
+          </ol>
+        )}
       </div>
     </section>
   );

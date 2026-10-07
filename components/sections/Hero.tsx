@@ -8,12 +8,14 @@ import { whatsappUrl } from "@/lib/contact";
 
 /**
  * Hero — a abertura da página. A headline é a assinatura da marca e é comum aos
- * dois modos; o subtítulo troca por modo. No Balada, a Grade de Comando corre
- * atrás do texto. Foto em P&B (a cor vive no accent), com contraste por modo
- * via --ds-photo. O quadro entra com um clip-path de 250ms (frameIn).
+ * dois modos; o subtítulo e a foto trocam por modo (revisão 2026-10-05: foto de
+ * palco no Eventos). No Balada, a Grade de Comando corre atrás do texto. Foto em
+ * P&B (a cor vive no accent), com contraste por modo via --ds-photo. O quadro
+ * entra com um clip-path de 250ms (frameIn).
  */
 export function Hero() {
   const { mode } = useMode();
+  const photo = hero.photo[mode];
 
   return (
     <section
@@ -46,12 +48,14 @@ export function Hero() {
 
         <div className="hero-frame relative z-[91] h-80 overflow-hidden border-2 border-fg bg-surface md:h-auto md:min-h-[640px]">
           <Image
-            src="/hero-gleib.webp"
-            alt="Retrato do DJ Gleib"
+            key={mode}
+            src={photo.src}
+            alt={photo.alt}
             fill
             priority
             sizes="(min-width: 768px) 400px, 100vw"
-            className="object-cover object-[50%_22%] [filter:var(--ds-photo)]"
+            style={{ objectPosition: photo.position }}
+            className="object-cover [filter:var(--ds-photo)]"
           />
         </div>
       </div>

@@ -1,10 +1,14 @@
+"use client";
+
+import { useMode } from "@/components/ModeProvider";
 import { availability } from "@/config/content";
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL, whatsappUrl } from "@/lib/contact";
 
 /**
  * FinalCTA — "Disponibilidade": a faixa de conversão em largura total, no accent
  * do modo (brand-book §4.7 "um accent por vez"). Dois caminhos: WhatsApp direto
- * e Instagram, como botões de contorno.
+ * e Instagram, como botões de contorno. A headline troca por modo (revisão
+ * 2026-10-05: no Balada, um convite mais animado).
  *
  * Desvio consciente do design: os rótulos secundários vão em on-accent CHEIO, sem
  * a opacidade .72 do export. Texto de 12px a 72% fica ~4,4:1 no Eventos e reprova
@@ -16,6 +20,9 @@ const LINK_CLASS =
 const HINT_CLASS = "text-[12px] font-medium uppercase tracking-[0.16em]";
 
 export function FinalCTA() {
+  const { mode } = useMode();
+  const [line1, line2] = availability.headline[mode];
+
   return (
     <section id="contato" className="bg-accent text-on-accent">
       <div className="mx-auto grid max-w-content items-end gap-12 px-4 py-16 sm:px-8 md:grid-cols-[1.2fr_1fr] md:gap-16 md:py-[88px]">
@@ -24,9 +31,9 @@ export function FinalCTA() {
             {availability.kicker}
           </p>
           <h2 className="m-0 text-[clamp(34px,5vw,66px)] font-extrabold leading-[1.02] tracking-[-0.03em]">
-            {availability.headline[0]}
+            {line1}
             <br />
-            {availability.headline[1]}
+            {line2}
           </h2>
         </div>
 

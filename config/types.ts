@@ -7,13 +7,20 @@
 import type { Mode } from "@/lib/mode";
 export type { Mode };
 
-/** The editorial block shown for the active mode (kicker, headline, 2 paragraphs, quote card). */
+/** The editorial block shown for the active mode (kicker, headline, 0+ paragraphs, quote card). */
 export type ModeBlock = {
   kicker: string;
   headline: string;
-  paragraphs: [string, string];
+  paragraphs: string[];
   quote: string;
   bullets: string[];
+};
+
+/** The hero photo for one mode. `position` is the CSS object-position of the crop. */
+export type HeroPhoto = {
+  src: string;
+  alt: string;
+  position: string;
 };
 
 /** One step of the "Como funciona" process. */
